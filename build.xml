@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<project name="cope" default="build" basedir=".">
+<project name="copernica" default="build" basedir=".">
 
 	<property name="build.file.tag" value="unlabeled" />
 	
@@ -1057,25 +1057,11 @@
 	<target name="cruise" depends="clean, all">
 		<copy todir="${basedir}/cruise">
 			<fileset file="${basedir}/getlib.properties" />
-			<fileset file="${basedir}/lib/bsh-core.jar" />
-			<fileset file="${basedir}/lib/cojen.jar" />
-			<fileset file="${basedir}/lib/trove.jar" />
-			<fileset file="${basedir}/lib/commons-fileupload.jar" />
-			<fileset file="${basedir}/lib/commons-io.jar" />
 			<fileset dir="${basedir}/lib/jdbc">
 				<include name="*.jar" />
 			</fileset>
-			<fileset file="${basedir}/build/exedio-cope.jar" />
-			<fileset file="${basedir}/build/exedio-cope.jar-src.zip" />
-			<fileset file="${basedir}/build/exedio-cope-test.jar" />
-			<fileset file="${basedir}/build/exedio-cope-instrument.jar" />
-			<fileset file="${basedir}/build/exedio-cope-console.jar" />
 			<fileset file="${basedir}/build/exedio-copernica.jar" />
-			<fileset file="${basedir}/build/exedio-cope-src-${build.file.tag}.tar.gz" />
-			<fileset file="${basedir}/build/exedio-cope-home.tar.bz2" />
-			<fileset file="${basedir}/home/testprotocol.html" />
 		</copy>
-		<copy file="CHANGELOG" tofile="${basedir}/cruise/exedio-cope.jar-CHANGELOG" />
 	</target>
 	
 </project>

@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<project name="cope cruise" default="cruise" basedir=".">
+<project name="copernica cruise" default="cruise" basedir=".">
 
 	<taskdef name="LoadFile" classname="org.apache.tools.ant.taskdefs.LoadFile" />
 	
