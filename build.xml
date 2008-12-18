@@ -1057,9 +1057,6 @@
 	<target name="cruise" depends="clean, all">
 		<copy todir="${basedir}/cruise">
 			<fileset file="${basedir}/getlib.properties" />
-			<fileset dir="${basedir}/lib/jdbc">
-				<include name="*.jar" />
-			</fileset>
 			<fileset file="${basedir}/build/exedio-copernica.jar" />
 		</copy>
 	</target>
