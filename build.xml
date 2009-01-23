@@ -887,13 +887,9 @@
 	<target name="clean" depends="dsmf.clean, runtime.clean, instrument.clean, console.clean, copernica.clean">
 		<delete dir="build" />
 		<delete dir="tomcat" />
-		<delete dir="home/lib" />
-		<delete dir="home/testprotocol.html" />
 	</target>
 	
-	<!-- home -->
-	
-	<target name="home.api" depends="local.properties">
+	<target name="api" depends="local.properties">
 
 		<property name="api.private" value="off" />
 		<property name="api.link.cops"  value="http://download.exedio.com/api/cops" />
@@ -902,17 +898,11 @@
 		<property name="api.link.junit" value="http://junit.sourceforge.net/javadoc" />
 		<property name="api.link.ant"   value="http://www.dpml.net/api/ant/1.6.5" />
 
-		<delete dir="home/api" />
-		<mkdir  dir="home/api" />
-
-		<copy todir="home/api/com/exedio/cope">
-			<fileset dir="runtime/doc">
-				<include name="*.png" />
-			</fileset>
-		</copy>
+		<delete dir="build/api" />
+		<mkdir  dir="build/api" />
 
 		<javadoc
-				destdir="home/api"
+				destdir="build/api"
 				maxmemory="60m"
 				source="1.5"
 				private="${api.private}"
@@ -958,58 +948,8 @@
 		</javadoc>
 	</target>
 	
-	<target name="api" depends="home.api" />
-	
-	<target name="home.lib" depends="runtime.jar, runtime.test.jar, instrument.jar">
-		<copy todir="home/lib">
-			<fileset dir="build">
-				<include name="exedio-cope.jar" />
-				<include name="exedio-cope-test.jar" />
-				<include name="exedio-cope-instrument.jar" />
-			</fileset>
-			<fileset dir="lib">
-				<include name="trove.jar" />
-				<include name="bsh-core.jar" />
-			</fileset>
-		</copy>
-	</target>
-
-	<target name="home.testprotocol" depends="runtime.test, console.compile">
-		<java classname="com.exedio.cope.console.EnvironmentCop" taskname="testprotocol"
-				fork="yes" failonerror="yes">
-			<classpath>
-				<pathelement location="build/runtime/classes" />
-				<pathelement location="build/console/classes" />
-				<pathelement location="lib/trove.jar" />
-				<pathelement location="lib/exedio-cops.jar" />
-				<pathelement location="lib/servlet-api.jar" />
-			</classpath>
-			<arg value="build/runtime/testprotocol.html"/>
-			<assertions><enable/></assertions>
-		</java>
-		<LoadFile srcFile="build/runtime/testprotocol.html" property="testprotocol.html" />
-		<copy file="home/testprotocol-template.html"
-				tofile="home/testprotocol.html"
-				overwrite="true">
-			<filterset>
-				<filter token="BUILD_TAG" value="${build.tag}" />
-				<filter token="TABLE" value="${testprotocol.html}" />
-			</filterset>
-		</copy>
-	</target>
-	
-	<target name="home.zip" depends="home.api, home.lib, home.testprotocol">
-		<mkdir dir="build/runtime" />
-		<tar destfile="build/exedio-cope-home.tar.bz2"
-			  compression="bzip2">
-			<tarfileset dir="${basedir}/home" />
-		</tar>
-	</target>
-	
-	<target name="home" depends="home.zip" />
-	
 	<target name="build"
-			depends="compile, test, jar, home,
+			depends="compile, test, jar, api,
 						tomcat, index,
 						webtest" />
 	
@@ -1023,8 +963,6 @@
 				<exclude name=".eclipse-output/**" />
 				<exclude name="build/**" />
 				<exclude name="tomcat/**" />
-				<exclude name="home/api/**" />
-				<exclude name="home/lib/**" />
 				<exclude name="cruise/**" />
 				<exclude name="**/*_Jspm.java" />
 				<exclude name="*.test.cope.properties" />
