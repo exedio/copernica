@@ -194,31 +194,6 @@
 		<ljavac srcdir="dsmf/src" destdir="build/runtime/classes" />
 	</target>
 	
-	<target name="dsmf.test.compile" depends="dsmf.compile, runtime.compile">
-		<ljavac srcdir="dsmf/testsrc" destdir="build/dsmf/testclasses">
-			<classpath>
-				<pathelement location="build/runtime/classes" />
-				<pathelement location="lib/junit.jar" />
-			</classpath>
-		</ljavac>
-	</target>
-	
-	<target name="dsmf.test" depends="dsmf.test.compile">
-		<foreachEnvironment skipSwitch="dsmf.test">
-			<body>
-				<ljunit test="com.exedio.dsmf.PackageTest" env="@{env}">
-					<classpath>
-						<pathelement location="build/runtime/classes" />
-						<pathelement location="build/dsmf/testclasses" />
-						<pathelement location="lib/jdbc/@{env.driver}" />
-						<pathelement location="lib/junit.jar" />
-					</classpath>
-					<sysproperty key="com.exedio.cope.properties" file="@{env.file}" />
-				</ljunit>
-			</body>
-		</foreachEnvironment>
-	</target>
-	
 	<target name="dsmf.clean">
 		<delete dir="build/dsmf" />
 	</target>
@@ -310,21 +285,6 @@
 				<include name="**/*.java" />
 			</fileset>
 		</instrument>
-		<instrument finalArgs="true" createDeprecated="true" verbose="false">
-			<fileset dir="runtime/testsrc/com/exedio/cope">
-				<include name="**/*.java" />
-				<exclude name="AbstractRuntimeTest.java" /><!-- TODO remove -->
-				<exclude name="SchemaTest.java" /><!-- TODO remove -->
-				<exclude name="ModelTest.java" /><!-- TODO remove -->
-				<exclude name="EnumTest.java" /><!-- TODO remove -->
-				<exclude name="InstanceOfTest.java" /><!-- TODO remove -->
-				<exclude name="NameTest.java" /><!-- TODO remove -->
-				<exclude name="FieldTest.java" /><!-- TODO remove -->
-				<exclude name="TestAnnotation.java" /><!-- TODO remove -->
-				<exclude name="pattern/CompositeTest.java" /><!-- TODO remove -->
-				<exclude name="pattern/DynamicModelTest.java" /><!-- TODO remove -->
-			</fileset>
-		</instrument>
 	</target>
 	
 	<target name="runtime.testmodel.compile" depends="runtime.testmodel.instrument">
@@ -334,156 +294,6 @@
 				<pathelement location="lib/servlet-api.jar" />
 			</classpath>
 		</ljavac>
-	</target>
-	
-	<target name="runtime.test.compile"
-			depends="runtime.testmodel.compile, runtime.junit.compile">
-		<ljavac srcdir="runtime/testsrc" destdir="build/runtime/testclasses">
-			<classpath>
-				<pathelement location="build/runtime/classes" />
-				<pathelement location="build/runtime/testmodelclasses" />
-				<pathelement location="lib/servlet-api.jar" />
-				<pathelement location="lib/junit.jar" />
-			</classpath>
-		</ljavac>
-	</target>
-	
-	<target name="runtime.test.jar" depends="dsmf.test.compile, runtime.test.compile">
-		<ljar name="cope test" jarfile="build/exedio-cope-test.jar" classpath="exedio-cope.jar junit.jar">
-			<fileset dir="build/dsmf/testclasses" />
-			<fileset dir="build/runtime/testclasses" />
-			<fileset dir="build/runtime/testmodelclasses" />
-		</ljar>
-	</target>
-	
-	<target name="runtime.test" depends="runtime.compile, runtime.test.compile">
-		<delete file="build/runtime/classes/com/exedio/cope/testprotocol.properties" />
-		<mkdir dir="build/testresults" />
-		<foreachEnvironment skipSwitch="runtime.test">
-			<body>
-				<junit taskname="junit @{env}" fork="yes"
-						 haltonerror="true" haltonfailure="true"
-						 dir="${basedir}"
-						 showoutput="true" printsummary="true">
-					<formatter type="brief" usefile="false" />
-					<formatter type="xml" />
-					<classpath>
-						<pathelement location="build/runtime/classes" />
-						<pathelement location="build/runtime/testmodelclasses" />
-						<pathelement location="build/runtime/testclasses" />
-						<pathelement location="lib/trove.jar" />
-						<pathelement location="lib/servlet-api.jar" />
-						<pathelement location="lib/jdbc/@{env.driver}" />
-						<pathelement location="lib/junit.jar" />
-					</classpath>
-					<test name="com.exedio.cope.PackageTest" todir="build/testresults" outfile="runtime-@{env}" />
-					<sysproperty key="com.exedio.cope.properties" file="@{env.file}" />
-					<sysproperty key="com.exedio.cope.testprotocol.file" file="build/runtime/classes/com/exedio/cope/testprotocol.properties" />
-					<sysproperty key="com.exedio.cope.testprotocol.prefix" value="@{env}" />
-					<sysproperty key="webapp" value="junitwebapp" />
-					<assertions><enable/></assertions>
-				</junit>
-			</body>
-		</foreachEnvironment>
-	</target>
-	
-	<target name="runtime.test.teardown" depends="runtime.compile, runtime.test.compile">
-		<foreachEnvironment skipSwitch="runtime.teardown">
-			<body>
-				<java classname="com.exedio.cope.PackageTest" taskname="tear down @{env}"
-						fork="yes" failonerror="yes">
-					<classpath>
-						<pathelement location="build/runtime/classes" />
-						<pathelement location="build/runtime/testmodelclasses" />
-						<pathelement location="build/runtime/testclasses" />
-						<pathelement location="lib/trove.jar" />
-						<pathelement location="lib/servlet-api.jar" />
-						<pathelement location="lib/junit.jar" />
-						<pathelement location="lib/jdbc/@{env.driver}" />
-					</classpath>
-					<sysproperty key="com.exedio.cope.properties" file="@{env.file}" />
-					<assertions><enable/></assertions>
-				</java>
-			</body>
-		</foreachEnvironment>
-	</target>
-
-	<target name="runtime.emma" depends="runtime.test.compile">
-		<!-- TODO does not yet work -->
-		
-		<delete file="metadata.emma" />
-		<emma>
-			<instr destdir="build/runtime/classes.emma" metadatafile="metadata.emma" merge="no">
-				<instrpath>
-					<fileset dir="build/runtime/classes" />
-				</instrpath>
-			</instr>
-		</emma>
-		
-		<foreachEnvironment skipSwitch="runtime.test">
-			<body>
-				<junit taskname="emma @{env}" fork="yes"
-						haltonerror="true" haltonfailure="true"
-						dir="${basedir}"
-						showoutput="true" printsummary="true">
-					<formatter type="brief" usefile="false" />
-					<classpath>
-						<pathelement location="build/runtime/classes.emma" />
-						<pathelement location="build/runtime/testmodelclasses" />
-						<pathelement location="build/runtime/testclasses" />
-						<pathelement location="lib/trove.jar" />
-						<pathelement location="lib/jdbc/@{env.driver}" />
-						<pathelement location="lib/servlet-api.jar" />
-					</classpath>
-					<test name="com.exedio.cope.PackageTest" />
-					<sysproperty key="com.exedio.cope.properties" file="@{env.file}" />
-					<assertions><enable/></assertions>
-				</junit>
-			</body>
-		</foreachEnvironment>
-	</target>
-
-	<target name="runtime.web"
-			  depends="runtime.compile, runtime.test.compile, runtime.testmodel.compile,
-							console.compile, copernica.compile">
-		<foreachEnvironment skipSwitch="runtime.web">
-			<body>
-				<mkdir dir="build/runtime/web-@{env}" />
-				
-				<copy todir="build/runtime/web-@{env}/WEB-INF/classes">
-					<fileset dir="build/runtime/classes" />
-					<fileset dir="build/runtime/testclasses" />
-					<fileset dir="build/runtime/testmodelclasses" />
-					<fileset dir="build/console/classes" />
-					<fileset dir="build/copernica/classes" />
-				</copy>
-				
-				<copy todir="build/runtime/web-@{env}/WEB-INF/lib">
-					<fileset file="lib/trove.jar" />
-					<fileset file="lib/exedio-cops.jar" />
-					<fileset file="lib/jdbc/@{env.driver}" />
-					<fileset file="lib/junit.jar" />
-				</copy>
-				
-				<copy tofile="build/runtime/web-@{env}/WEB-INF/cope.properties" file="@{env.file}" />
-				<copy todir="build/runtime/web-@{env}/WEB-INF/"
-						file="runtime/web.xml" />
-				<touch file="build/runtime/web-@{env}/WEB-INF/web.xml" />
-			</body>
-		</foreachEnvironment>
-	</target>
-	
-	<target name="runtime.tomcat" depends="runtime.web, catalina">
-		<foreachEnvironment skipSwitch="runtime.tomcat">
-			<body>
-				<copy tofile="tomcat/conf/Catalina/localhost/copelibtest-@{env}.xml"
-						file="runtime/context.xml">
-					<filterset>
-						<filter token="ENV" value="@{env}" />
-					</filterset>
-				</copy>
-			</body>
-		</foreachEnvironment>
 	</target>
 	
 	<target name="runtime.servlet.test.instrument" depends="instrument.taskdef" unless="skip.instrument">
@@ -595,44 +405,6 @@
 		</taskdef>
 	</target>
 	
-	<target name="instrument.test.instrument" depends="instrument.taskdef" unless="skip.instrument">
-		<instrument finalArgs="true" createDeprecated="true" verbose="false">
-			<fileset dir="instrument/testsrc/com/exedio/cope/instrument/testmodel">
-				<include name="**/*.java" />
-			</fileset>
-		</instrument>
-	</target>
-	
-	<target name="instrument.test.compile" depends="instrument.test.instrument, runtime.compile, instrument.compile">
-		<ljavac srcdir="instrument/testsrc" destdir="build/instrument/testclasses">
-			<classpath>
-				<pathelement location="build/runtime/classes" />
-				<pathelement location="build/instrument/classes" />
-				<pathelement location="lib/junit.jar" />
-			</classpath>
-		</ljavac>
-		<copy todir="build/instrument/testclasses">
-			<fileset dir="instrument/examplesrc">
-				<include name="**/*.java" />
-			</fileset>
-		</copy>
-	</target>
-	
-	<target name="instrument.test"
-				depends="runtime.compile, instrument.compile, instrument.test.compile">
-		<ljunit test="com.exedio.cope.instrument.PackageTest">
-			<classpath>
-				<pathelement location="build/runtime/classes" />
-				<pathelement location="build/instrument/classes" />
-				<pathelement location="build/instrument/testclasses" />
-				<pathelement location="lib/trove.jar" />
-				<pathelement location="lib/servlet-api.jar" />
-				<pathelement location="lib/bsh-core.jar" />
-				<pathelement location="lib/junit.jar" />
-			</classpath>
-		</ljunit>
-	</target>
-	
 	<target name="instrument.clean">
 		<delete dir="build/instrument" />
 	</target>
@@ -668,33 +440,7 @@
 		</ljar>
 	</target>
 	
-	<target name="console.test.compile" depends="console.core.compile">
-		<ljavac srcdir="console/testsrc" destdir="build/console/testclasses">
-			<classpath>
-				<pathelement location="build/runtime/classes" />
-				<pathelement location="build/console/classes" />
-				<pathelement location="lib/exedio-cops.jar" />
-				<pathelement location="lib/servlet-api.jar" />
-				<pathelement location="lib/junit.jar" />
-			</classpath>
-		</ljavac>
-	</target>
-	
-	<target name="console.test" depends="console.test.compile">
-		<ljunit test="com.exedio.cope.console.PackageTest">
-			<classpath>
-				<pathelement location="build/runtime/classes" />
-				<pathelement location="build/console/classes" />
-				<pathelement location="build/console/testclasses" />
-				<pathelement location="lib/exedio-cops.jar" />
-				<pathelement location="lib/trove.jar" />
-				<pathelement location="lib/jdbc/hsqldb.jar" />
-				<pathelement location="lib/junit.jar" />
-			</classpath>
-		</ljunit>
-	</target>
-	
-	<target name="console.compile" depends="console.core.compile, console.test.compile" />
+	<target name="console.compile" depends="console.core.compile" />
 	
 	<target name="console.clean">
 		<delete dir="build/console" />
@@ -743,7 +489,7 @@
 	</target>
 	
 	<target name="copernica.test.compile"
-				depends="runtime.compile, runtime.test.compile, copernica.compile, copernica.test.jspm">
+				depends="runtime.compile, runtime.testmodel.compile, copernica.compile, copernica.test.jspm">
 		<ljavac srcdir="copernica/testsrc" destdir="build/copernica/testclasses">
 			<classpath>
 				<pathelement location="build/runtime/classes" />
@@ -849,7 +595,7 @@
 	
 	<target name="src" depends="jspm, index" description="creates all sources, so the IDE does not complain" />
 	
-	<target name="instrument" depends="runtime.servlet.test.instrument, instrument.test.instrument, runtime.testmodel.instrument" />
+	<target name="instrument" depends="runtime.servlet.test.instrument, runtime.testmodel.instrument" />
 	
 	<target name="compile"
 			  depends="runtime.compile,
@@ -858,15 +604,11 @@
 			  console.compile,
 			  copernica.compile, copernica.test.compile" />
 	
-	<target name="jar" depends="runtime.jar, runtime.test.jar, instrument.jar, console.jar, copernica.jar" />
+	<target name="jar" depends="runtime.jar, instrument.jar, console.jar, copernica.jar" />
 	
-	<target name="teardown" depends="runtime.test.teardown" />
+	<target name="web" depends="copernica.web" />
 	
-	<target name="test" depends="dsmf.test, runtime.test, instrument.test, console.test" />
-	
-	<target name="web" depends="runtime.web, copernica.web" />
-	
-	<target name="tomcat" depends="runtime.tomcat, runtime.servlet.test.tomcat, copernica.tomcat" />
+	<target name="tomcat" depends="runtime.servlet.test.tomcat, copernica.tomcat" />
 	
 	<target name="webtest" depends="copernica.webtest" />
 	
@@ -949,7 +691,7 @@
 	</target>
 	
 	<target name="build"
-			depends="compile, test, jar, api,
+			depends="compile, jar, api,
 						tomcat, index,
 						webtest" />
 	
