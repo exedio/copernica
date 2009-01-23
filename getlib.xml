@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 
-<project name="cope getlib" default="getlib" basedir=".">
+<project name="copernica getlib" default="getlib" basedir=".">
 
 	<import file="getlib/getlib-contrib.xml"/>
 
 	<!-- the project uses several mysql libraries directly -->
-	<target name="getlib" depends="hsqldb, trove, cojen, bsh-core, commons-fileupload, exedio-jspm, exedio-cops" />
+	<target name="getlib" depends="commons-fileupload, exedio-jspm, exedio-cops, exedio-cope" />
 
 </project>

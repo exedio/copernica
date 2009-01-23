@@ -140,7 +140,7 @@
 							maxwait="40" maxwaitunit="second"
 							checkevery="5" checkeveryunit="second"
 							timeoutproperty="server.app.init.failed">
-						<http url="http://127.0.0.1:8080/cope-runtime-servlet/editedConsole" />
+						<http url="http://127.0.0.1:8080/copetest-hsqldb/console" />
 					</waitfor>
 					<echo message="tomcat (@{name}): ready ..." />
 					<fail if="server.app.init.failed" message="tomcat could not be started." />
@@ -190,96 +190,13 @@
 	
 	<!-- dsmf -->
 	
-	<target name="dsmf.compile">
-		<ljavac srcdir="dsmf/src" destdir="build/runtime/classes" />
-	</target>
-	
 	<target name="dsmf.clean">
 		<delete dir="build/dsmf" />
 	</target>
 	
 	<!-- runtime -->
 	
-	<target name="runtime.core.compile" depends="dsmf.compile">
-		<ljavac srcdir="runtime/src" destdir="build/runtime/classes">
-			<classpath>
-				<pathelement location="lib/trove.jar" />
-			</classpath>
-		</ljavac>
-	</target>
-	
-	<target name="runtime.driver.compile" depends="runtime.core.compile">
-		<for param="driver.file">
-			<path>
-				<fileset dir="${basedir}" includes="*.driver.properties" />
-			</path>
-			<sequential>
-				<basename file="@{driver.file}" property="@{driver.file}.name" suffix=".driver.properties" />
-				<property file="@{driver.file}" prefix="@{driver.file}." />
-				<echo message="Compiling driver ${@{driver.file}.name} with ${@{driver.file}.jar}." />
-				<!--echo message="file=@{driver.file},driver=${@{driver.file}.name},jar=${@{driver.file}.jar}." /-->
-				<ljavac srcdir="runtime/${@{driver.file}.name}src" destdir="build/runtime/classes">
-					<classpath>
-						<pathelement location="lib/trove.jar" />
-						<pathelement location="lib/jdbc/${@{driver.file}.jar}" />
-					</classpath>
-				</ljavac>
-			</sequential>
-		</for>
-	</target>
-
-	<target name="runtime.pattern.compile" depends="runtime.core.compile">
-		<ljavac srcdir="runtime/patternsrc" destdir="build/runtime/classes" />
-	</target>
-	
-	<target name="runtime.servlet.jspm">
-		<jspm method="print">
-			<fileset dir="runtime/servletsrc" includes="**/*.jspm" />
-		</jspm>
-	</target>
-	
-	<target name="runtime.servlet.compile" depends="runtime.core.compile, runtime.servlet.jspm">
-		<ljavac srcdir="runtime/servletsrc" destdir="build/runtime/classes">
-			<classpath>
-				<pathelement location="lib/servlet-api.jar" />
-				<pathelement location="lib/exedio-cops.jar" />
-			</classpath>
-		</ljavac>
-	</target>
-	
-	<target name="runtime.junit.compile" depends="runtime.core.compile">
-		<ljavac srcdir="runtime/junitsrc" destdir="build/runtime/classes">
-			<classpath>
-				<pathelement location="lib/junit.jar" />
-			</classpath>
-		</ljavac>
-	</target>
-	
-	<target name="runtime.compile"
-				depends="runtime.core.compile,
-							runtime.driver.compile,
-							runtime.pattern.compile,
-							runtime.servlet.compile,
-							runtime.junit.compile" />
-	
-	<target name="runtime.jar" depends="runtime.compile">
-		<ljar name="cope" jarfile="build/exedio-cope.jar" classpath="trove.jar">
-			<fileset dir="build/runtime/classes" />
-		</ljar>
-	</target>
-	
-	<target name="runtime.jar.src">
-		<mkdir dir="build" />
-		<zip destfile="build/exedio-cope.jar-src.zip">
-			<zipfileset dir="${basedir}/dsmf/src"          ><include name="**/*.java"/></zipfileset>
-			<zipfileset dir="${basedir}/runtime/src"       ><include name="**/*.java"/></zipfileset>
-			<zipfileset dir="${basedir}/runtime/patternsrc"><include name="**/*.java"/></zipfileset>
-			<zipfileset dir="${basedir}/runtime/servletsrc"><include name="**/*.java"/></zipfileset>
-			<zipfileset dir="${basedir}/runtime/junitsrc"  ><include name="**/*.java"/></zipfileset>
-		</zip>
-	</target>
-	
-	<target name="runtime.testmodel.instrument" depends="instrument.taskdef" unless="skip.instrument">
+	<target name="runtime.testmodel.instrument" unless="skip.instrument">
 		<instrument finalArgs="true" createDeprecated="true" verbose="false">
 			<fileset dir="runtime/testmodelsrc/com/exedio/cope/testmodel">
 				<include name="**/*.java" />
@@ -290,72 +207,13 @@
 	<target name="runtime.testmodel.compile" depends="runtime.testmodel.instrument">
 		<ljavac srcdir="runtime/testmodelsrc" destdir="build/runtime/testmodelclasses">
 			<classpath>
-				<pathelement location="build/runtime/classes" />
+				<pathelement location="lib/exedio-cope.jar" />
 				<pathelement location="lib/servlet-api.jar" />
 			</classpath>
 		</ljavac>
-	</target>
-	
-	<target name="runtime.servlet.test.instrument" depends="instrument.taskdef" unless="skip.instrument">
-		<instrument verbose="false">
-			<fileset dir="runtime/servlettestsrc">
-				<include name="**/*.java" />
-				<exclude name="**/EditedServlet_Jspm.java" />
-			</fileset>
-		</instrument>
-	</target>
-
-	<target name="runtime.servlet.test.jspm">
-		<jspm method="print">
-			<fileset dir="runtime/servlettestsrc" includes="**/*.jspm" />
-		</jspm>
-	</target>
-
-	<target name="runtime.servlet.test.web"
-			  depends="runtime.servlet.test.instrument, runtime.servlet.test.jspm, runtime.servlet.compile,
-			           console.compile">
-		<copy todir="runtime/servlettestweb/WEB-INF/classes">
-			<fileset dir="build/runtime/classes" />
-		</copy>
-		<ljavac srcdir="runtime/servlettestsrc" destdir="runtime/servlettestweb/WEB-INF/classes">
-			<classpath>
-				<pathelement location="lib/servlet-api.jar" />
-			</classpath>
-		</ljavac>
-		<copy todir="runtime/servlettestweb/WEB-INF/classes">
-			<fileset dir="runtime/servlettestsrc">
-				<include name="**/*.gif" />
-				<include name="**/*.jpg" />
-				<include name="**/*.png" />
-				<include name="**/*.txt" />
-			</fileset>
-		</copy>
-		<copy todir="runtime/servlettestweb/WEB-INF/lib">
-			<fileset file="lib/trove.jar" />
-			<fileset file="lib/exedio-cops.jar" />
-			<fileset file="lib/commons-fileupload.jar" />
-			<fileset file="lib/commons-io.jar" />
-			<fileset file="lib/jdbc/hsqldb.jar" />
-		</copy>
-		<copy todir="runtime/servlettestweb/WEB-INF/classes">
-			<fileset dir="build/console/classes" />
-		</copy>
-	</target>
-	
-	<target name="runtime.servlet.test.tomcat" depends="runtime.servlet.test.web, catalina">
-		<copy tofile="tomcat/conf/Catalina/localhost/cope-runtime-servlet.xml"
-				file="runtime/servlet-context.xml" />
 	</target>
 	
 	<target name="runtime.clean">
-		<delete>
-			<fileset dir="runtime/servletsrc">
-				<include name="**/*_Jspm.java" />
-			</fileset>
-			<fileset dir="runtime/servlettestsrc">
-				<include name="**/*_Jspm.java" />
-			</fileset>
-		</delete>
 		<delete dir="build/runtime" />
 		<delete dir="runtime/servlettestweb/WEB-INF/classes" />
 		<delete dir="runtime/servlettestweb/WEB-INF/lib" />
@@ -363,36 +221,9 @@
 	
 	<!-- instrument -->
 	
-	<target name="instrument.core.compile" depends="runtime.compile">
-		<ljavac srcdir="instrument/src" destdir="build/instrument/classes">
-			<classpath>
-				<pathelement location="build/runtime/classes" />
-				<pathelement location="lib/bsh-core.jar" />
-				<pathelement location="lib/cojen.jar" />
-			</classpath>
-		</ljavac>
-	</target>
-	
-	<target name="instrument.ant.compile" depends="runtime.compile, instrument.core.compile">
-		<ljavac srcdir="instrument/antsrc" destdir="build/instrument/classes" includeAntRuntime="true">
-			<classpath>
-				<pathelement location="build/runtime/classes" />
-				<pathelement location="lib/bsh-core.jar" />
-			</classpath>
-		</ljavac>
-	</target>
-	
-	<target name="instrument.compile" depends="instrument.core.compile, instrument.ant.compile" />
-
-	<target name="instrument.jar" depends="instrument.compile">
-		<ljar name="cope instrumentor" jarfile="build/exedio-cope-instrument.jar" classpath="exedio-cope.jar bsh-core.jar cojen.jar">
-			<fileset dir="build/instrument/classes" />
-		</ljar>
-	</target>
-	
-	<target name="instrument.taskdef" depends="runtime.compile, instrument.compile">
 		<taskdef name="instrument" classname="com.exedio.cope.instrument.AntTask">
 			<classpath>
+				<pathelement location="lib/exedio-cope-instrument.jar" />
 				<pathelement location="lib/trove.jar" />
 				<pathelement location="lib/servlet-api.jar" />
 				<pathelement location="lib/commons-fileupload.jar" />
@@ -403,7 +234,6 @@
 				<pathelement location="build/instrument/classes" />
 			</classpath>
 		</taskdef>
-	</target>
 	
 	<target name="instrument.clean">
 		<delete dir="build/instrument" />
@@ -411,44 +241,8 @@
 	
 	<!-- console -->
 	
-	<target name="console.jspm">
-		<jspm method="print">
-			<fileset dir="console/src" includes="**/*.jspm" />
-		</jspm>
-	</target>
-	
-	<target name="console.core.compile" depends="runtime.compile, console.jspm">
-		<ljavac srcdir="console/src" destdir="build/console/classes">
-			<classpath>
-				<pathelement location="build/runtime/classes" />
-				<pathelement location="lib/exedio-cops.jar" />
-				<pathelement location="lib/servlet-api.jar" />
-			</classpath>
-		</ljavac>
-		<copy todir="build/console/classes">
-			<fileset dir="console/src">
-				<include name="**/*.css" />
-				<include name="**/*.js" />
-				<include name="**/*.png" />
-			</fileset>
-		</copy>
-	</target>
-	
-	<target name="console.jar" depends="console.core.compile">
-		<ljar name="cope console" jarfile="build/exedio-cope-console.jar" classpath="exedio-cope.jar exedio-cops.jar">
-			<fileset dir="build/console/classes" />
-		</ljar>
-	</target>
-	
-	<target name="console.compile" depends="console.core.compile" />
-	
 	<target name="console.clean">
 		<delete dir="build/console" />
-		<delete>
-			<fileset dir="console/src">
-				<include name="**/*_Jspm.java" />
-			</fileset>
-		</delete>
 	</target>
 	
 	<!-- copernica -->
@@ -459,10 +253,11 @@
 		</jspm>
 	</target>
 	
-	<target name="copernica.compile" depends="runtime.compile, copernica.jspm">
+	<target name="copernica.compile" depends="copernica.jspm">
 		<ljavac srcdir="copernica/src" destdir="build/copernica/classes">
 			<classpath>
 				<pathelement location="build/runtime/classes" />
+				<pathelement location="lib/exedio-cope.jar" />
 				<pathelement location="lib/exedio-cops.jar" />
 				<pathelement location="lib/servlet-api.jar" />
 			</classpath>
@@ -489,12 +284,13 @@
 	</target>
 	
 	<target name="copernica.test.compile"
-				depends="runtime.compile, runtime.testmodel.compile, copernica.compile, copernica.test.jspm">
+				depends="runtime.testmodel.compile, copernica.compile, copernica.test.jspm">
 		<ljavac srcdir="copernica/testsrc" destdir="build/copernica/testclasses">
 			<classpath>
 				<pathelement location="build/runtime/classes" />
 				<pathelement location="build/runtime/testmodelclasses" />
 				<pathelement location="build/copernica/classes" />
+				<pathelement location="lib/exedio-cope.jar" />
 				<pathelement location="lib/exedio-cops.jar" />
 				<pathelement location="lib/junit.jar" />
 				<pathelement location="lib/servlet-api.jar" />
@@ -511,9 +307,7 @@
 				<mkdir dir="build/copernica/web-@{env}" />
 				
 				<copy todir="build/copernica/web-@{env}/WEB-INF/classes">
-					<fileset dir="build/runtime/classes" />
 					<fileset dir="build/runtime/testmodelclasses" />
-					<fileset dir="build/console/classes" />
 					<fileset dir="build/copernica/classes" />
 					<fileset dir="build/copernica/testclasses" />
 				</copy>
@@ -523,6 +317,8 @@
 					<fileset file="lib/commons-fileupload.jar" />
 					<fileset file="lib/commons-io.jar" />
 					<fileset file="lib/exedio-cops.jar" />
+					<fileset file="lib/exedio-cope.jar" />
+					<fileset file="lib/exedio-cope-console.jar" />
 					<fileset file="lib/jdbc/@{env.driver}" />
 				</copy>
 				
@@ -559,7 +355,6 @@
 	
 	<target name="copernica.webtest"
 				depends="catalina,
-							runtime.servlet.test.tomcat,
 							copernica.tomcat, copernica.webtest.compile">
 		<runInTomcat name="copernica.webtest">
 			<body>
@@ -591,24 +386,21 @@
 	
 	<!-- common -->
 	
-	<target name="jspm" depends="runtime.servlet.jspm, runtime.servlet.test.jspm, console.jspm, copernica.jspm, copernica.test.jspm" />
+	<target name="jspm" depends="copernica.jspm, copernica.test.jspm" />
 	
 	<target name="src" depends="jspm, index" description="creates all sources, so the IDE does not complain" />
 	
-	<target name="instrument" depends="runtime.servlet.test.instrument, runtime.testmodel.instrument" />
+	<target name="instrument" depends="runtime.testmodel.instrument" />
 	
 	<target name="compile"
-			  depends="runtime.compile,
-			  runtime.servlet.test.web,
-			  instrument.compile,
-			  console.compile,
+			  depends="
 			  copernica.compile, copernica.test.compile" />
 	
-	<target name="jar" depends="runtime.jar, instrument.jar, console.jar, copernica.jar" />
+	<target name="jar" depends="copernica.jar" />
 	
 	<target name="web" depends="copernica.web" />
 	
-	<target name="tomcat" depends="runtime.servlet.test.tomcat, copernica.tomcat" />
+	<target name="tomcat" depends="copernica.tomcat" />
 	
 	<target name="webtest" depends="copernica.webtest" />
 	
@@ -664,14 +456,6 @@
 			<link href="${api.link.junit}" packagelistLoc="package-list/junit" offline="true" />
 			<link href="${api.link.ant}"   packagelistLoc="package-list/ant"   offline="true" />
 			<link href="${api.link.cops}"  packagelistLoc="package-list/cops"  offline="true" />
-			<fileset file="dsmf/src/com" includes="**/*.java" />
-			<fileset file="runtime/src/com" includes="**/*.java" />
-			<fileset file="runtime/patternsrc/com" includes="**/*.java" />
-			<fileset file="runtime/servletsrc/com" includes="**/*.java" />
-			<fileset file="runtime/junitsrc/com" includes="**/*.java" />
-			<fileset file="instrument/src/com" includes="**/*.java" />
-			<fileset file="instrument/antsrc/com" includes="**/*.java" />
-			<fileset file="console/src/com" includes="**/*.java" />
 			<fileset file="copernica/src/com" includes="**/*.java" />
 			<classpath>
 				<pathelement location="lib/trove.jar" />
@@ -680,6 +464,7 @@
 				<pathelement location="lib/bsh-core.jar" />
 				<pathelement location="lib/cojen.jar" />
 				<pathelement location="lib/exedio-cops.jar" />
+				<pathelement location="lib/exedio-cope.jar" />
 				<pathelement location="lib/servlet-api.jar" />
 				<pathelement location="lib/commons-fileupload.jar" />
 			</classpath>
@@ -712,7 +497,6 @@
 				<exclude name="runtime/servlettestweb/WEB-INF/classes/**" />
 				<exclude name="runtime/servlettestweb/WEB-INF/lib/**" />
 				<!-- oracle is not open source -->
-				<exclude name="oracle.driver.properties" />
 				<exclude name="lib/ojdbc14*.jar" />
 			</tarfileset>
 			<tarfileset dir="${basedir}">
@@ -732,7 +516,7 @@
 	
 	<target name="dist" depends="dist.tar, dist.test" />
 	
-	<target name="all" depends="build, runtime.jar.src, dist" />
+	<target name="all" depends="build, dist" />
 
 	<target name="cruise" depends="clean, all">
 		<copy todir="${basedir}/cruise">
