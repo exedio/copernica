@@ -14,13 +14,6 @@
 			classname="com.exedio.jspm.AntTask"
 			classpath="lib/exedio-jspm.jar" />
 	
-	<path id="emma.lib">
-		<pathelement location="lib/emma.jar" />
-		<pathelement location="lib/emma_ant.jar" />
-	</path>
-	
-	<taskdef resource="emma_ant.properties" classpathref="emma.lib" />
-	
 	<macrodef name="ljavac">
 		<attribute name="srcdir" />
 		<attribute name="destdir" />
