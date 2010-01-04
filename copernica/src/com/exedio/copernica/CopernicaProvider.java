@@ -30,7 +30,7 @@ import com.exedio.cope.Field;
 import com.exedio.cope.Item;
 import com.exedio.cope.Model;
 import com.exedio.cope.Type;
-import com.exedio.cope.util.ConnectToken;
+import com.exedio.cope.misc.ConnectToken;
 
 public interface CopernicaProvider
 {
