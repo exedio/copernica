@@ -38,7 +38,7 @@ import com.exedio.cope.Pattern;
 import com.exedio.cope.QueryInfo;
 import com.exedio.cope.Type;
 import com.exedio.cope.UniqueConstraint;
-import com.exedio.cope.pattern.Media;
+import com.exedio.cope.pattern.MediaPath;
 import com.exedio.cops.Pager;
 
 final class TypeCop_Jspm
@@ -118,7 +118,7 @@ final class TypeCop_Jspm
 				for(Iterator i = features.iterator(); i.hasNext(); )
 				{
 					final Feature feature = (Feature)i.next();
-					if(!((feature instanceof Function) || (feature instanceof Media)))
+					if(!((feature instanceof Function) || (feature instanceof MediaPath)))
 						continue;
 					%>
 					<th><%=provider.getDisplayName(language, feature)%></th><%
@@ -130,7 +130,7 @@ final class TypeCop_Jspm
 				for(Iterator i = features.iterator(); i.hasNext(); )
 				{
 					final Feature feature = (Feature)i.next();
-					if(!((feature instanceof Function) || (feature instanceof Media)))
+					if(!((feature instanceof Function) || (feature instanceof MediaPath)))
 						continue;
 					%>
 					<th class="orderby"><%
@@ -174,13 +174,13 @@ final class TypeCop_Jspm
 					for(Iterator j = features.iterator(); j.hasNext(); )
 					{
 						final Feature feature = (Feature)j.next();
-						if(!((feature instanceof Function) || (feature instanceof Media)))
+						if(!((feature instanceof Function) || (feature instanceof MediaPath)))
 							continue;
 						%>
 					<td><%
-						if(feature instanceof Media)
+						if(feature instanceof MediaPath)
 						{
-							final Media media = (Media)feature;
+							final MediaPath media = (MediaPath)feature;
 							final String url = media.getURL(item);
 							if(url==null)
 							{
