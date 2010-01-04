@@ -312,6 +312,7 @@
 					<fileset file="lib/exedio-cops.jar" />
 					<fileset file="lib/exedio-cope.jar" />
 					<fileset file="lib/exedio-cope-console.jar" />
+					<fileset file="lib/exedio-cope-util.jar" />
 					<fileset file="lib/jdbc/@{env.driver}" />
 				</copy>
 				
