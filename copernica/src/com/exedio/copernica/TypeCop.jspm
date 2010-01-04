@@ -118,6 +118,8 @@ final class TypeCop_Jspm
 				for(Iterator i = features.iterator(); i.hasNext(); )
 				{
 					final Feature feature = (Feature)i.next();
+					if(!((feature instanceof Function) || (feature instanceof Media)))
+						continue;
 					%>
 					<th><%=provider.getDisplayName(language, feature)%></th><%
 				}
@@ -128,6 +130,8 @@ final class TypeCop_Jspm
 				for(Iterator i = features.iterator(); i.hasNext(); )
 				{
 					final Feature feature = (Feature)i.next();
+					if(!((feature instanceof Function) || (feature instanceof Media)))
+						continue;
 					%>
 					<th class="orderby"><%
 					if(feature instanceof Function)
@@ -170,12 +174,13 @@ final class TypeCop_Jspm
 					for(Iterator j = features.iterator(); j.hasNext(); )
 					{
 						final Feature feature = (Feature)j.next();
+						if(!((feature instanceof Function) || (feature instanceof Media)))
+							continue;
 						%>
 					<td><%
-						if(feature instanceof DataField)
+						if(feature instanceof Media)
 						{
-							final DataField dataAttribute = (DataField)feature;
-							final Media media = Media.get(dataAttribute);
+							final Media media = (Media)feature;
 							final String url = media.getURL(item);
 							if(url==null)
 							{
@@ -245,10 +250,6 @@ final class TypeCop_Jspm
 								%><%=value.booleanValue()?cop.getDisplayNameOn():cop.getDisplayNameOff()%><%
 							}
 						}
-						else if(feature instanceof Pattern)
-							;
-						else if(feature instanceof UniqueConstraint)
-							;
 						else
 						{
 							%><%=item.get((Function<?>)feature)%><%
