@@ -64,19 +64,19 @@ public class StringTest extends AbstractWebTest
 		assertTitleEquals("String Item");
 		assertTextPresent("String Item");
 		
-		clickLinkWithText("StringItem.0");
-		assertTitleEquals("StringItem.0");
+		clickLinkWithText("StringItem-0");
+		assertTitleEquals("StringItem-0");
 		assertItemForm();
 
 		setFormElementWithLabel(ANY, "yeah"); any = "yeah";
 		submitWithValue(SAVE_BUTTON);
-		assertTitleEquals("StringItem.0");
+		assertTitleEquals("StringItem-0");
 		assertItemForm();
 
 		// take back all changes
 		setFormElementWithLabel(ANY, "any1"); any = "any1";
 		submitWithValue(SAVE_BUTTON);
-		assertTitleEquals("StringItem.0");
+		assertTitleEquals("StringItem-0");
 		assertItemForm();
 	}
 }

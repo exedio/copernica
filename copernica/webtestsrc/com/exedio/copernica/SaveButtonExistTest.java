@@ -31,15 +31,15 @@ public class SaveButtonExistTest extends AbstractWebTest
 		assertTitleEquals("String Item");
 		
 		final String SAVE = "SAVE";
-		clickLinkWithText("StringItem.1");
-		assertTitleEquals("StringItem.1");
+		clickLinkWithText("StringItem-1");
+		assertTitleEquals("StringItem-1");
 		assertSubmitButtonPresent(SAVE);
 
 		clickLinkWithText("Collision Item1");
 		assertTitleEquals("Collision Item1");
 		
-		clickLinkWithText("EmptyItem.1");
-		assertTitleEquals("EmptyItem.1");
+		clickLinkWithText("EmptyItem-1");
+		assertTitleEquals("EmptyItem-1");
 		assertSubmitButtonNotPresent(SAVE);
 	}
 }
