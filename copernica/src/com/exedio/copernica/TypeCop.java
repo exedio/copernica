@@ -131,7 +131,7 @@ final class TypeCop extends CopernicaCop
 			query.setOrderByThis(true);
 		query.setLimit(pager.getOffset(), pager.getLimit());
 		
-		final Transaction transaction = type.getModel().getCurrentTransaction();
+		final Transaction transaction = type.getModel().currentTransaction();
 		transaction.setQueryInfoEnabled(true);
 
 		queryResult = query.searchAndTotal();
