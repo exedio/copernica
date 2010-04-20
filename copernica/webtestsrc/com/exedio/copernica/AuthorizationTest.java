@@ -33,7 +33,7 @@ public class AuthorizationTest extends WebTestCase
 	{
 		super.setUp();
 		final TestContext ctx = getTestContext();
-		ctx.setBaseUrl("http://127.0.0.1:8080/copetest-hsqldb/");
+		ctx.setBaseUrl("http://127.0.0.1:" + System.getProperty("tomcat.port.http") + "/copetest-hsqldb/");
 		beginAt("console/schema.html");
 		submit("schema.create");
 	}
@@ -60,7 +60,7 @@ public class AuthorizationTest extends WebTestCase
 		final WebClient client = getTestContext().getWebClient();
 		if(login!=null)
 			client.setAuthorization(login, password);
-		final WebRequest request = new GetMethodWebRequest("http://127.0.0.1:8080/copetest-hsqldb/copernica.jsp");
+		final WebRequest request = new GetMethodWebRequest("http://127.0.0.1:" + System.getProperty("tomcat.port.http") + "/copetest-hsqldb/copernica.jsp");
 		try
 		{
 			client.sendRequest(request);

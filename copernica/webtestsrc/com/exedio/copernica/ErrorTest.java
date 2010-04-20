@@ -30,7 +30,7 @@ public class ErrorTest extends AbstractWebTest
 		catch(RuntimeException e)
 		{
 			final String message = e.getMessage();
-			assertTrue(message, message.startsWith("com.meterware.httpunit.HttpInternalErrorException: Error on HTTP request: 500 Internal Error [http://127.0.0.1:8080/copetest-hsqldb/copernica.jsp/type.html?t=EmptyItemx"));
+			assertTrue(message, message.startsWith("com.meterware.httpunit.HttpInternalErrorException: Error on HTTP request: 500 Internal Error [http://127.0.0.1:" + System.getProperty("tomcat.port.http") + "/copetest-hsqldb/copernica.jsp/type.html?t=EmptyItemx"));
 		}
 	}
 }

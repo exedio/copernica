@@ -38,7 +38,7 @@ public class AbstractWebTest extends WebTestCase
 	{
 		super.setUp();
 		final TestContext ctx = getTestContext();
-		ctx.setBaseUrl("http://127.0.0.1:8080/copetest-hsqldb/");
+		ctx.setBaseUrl("http://127.0.0.1:" + System.getProperty("tomcat.port.http") + "/copetest-hsqldb/");
 		ctx.setAuthorization("admin", "nimda");
 		beginAt("console/schema.html");
 		submit("schema.create");
