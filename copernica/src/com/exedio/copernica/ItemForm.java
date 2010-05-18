@@ -255,6 +255,13 @@ final class ItemForm extends Form
 			else
 				return new DateField(this, attribute, name, ((com.exedio.cope.DateField)attribute).get(item));
 		}
+		else if(attribute instanceof com.exedio.cope.DayField)
+		{
+			if(post)
+				return new DayField(this, attribute, name);
+			else
+				return new DayField(this, attribute, name, ((com.exedio.cope.DayField)attribute).get(item));
+		}
 		else if(attribute instanceof com.exedio.cope.StringField)
 		{
 			if(post)

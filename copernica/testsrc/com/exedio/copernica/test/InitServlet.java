@@ -40,6 +40,7 @@ import com.exedio.cope.testmodel.PointerItem;
 import com.exedio.cope.testmodel.PointerTargetItem;
 import com.exedio.cope.testmodel.StringItem;
 import com.exedio.cope.testmodel.UniqueFinal;
+import com.exedio.cope.util.Day;
 import com.exedio.copernica.CopernicaProvider;
 import com.exedio.cops.Cop;
 import com.exedio.cops.CopsServlet;
@@ -150,10 +151,12 @@ public class InitServlet extends CopsServlet
 			attributeItem3.setSomeData(thisClass.getResourceAsStream("tree.jpg"), "image/jpeg");
 			
 			final Date date = new Date(1087368238214l);
+			final Day  day  = new Day (2010, 5, 18);
 			for(int i = 0; i<102; i++)
 			{
 				final AttributeItem attributeItem = new AttributeItem("running"+i, 7+i, 8l+i, 2.4+i, (i%2)==0, emptyItem2, AttributeItem.SomeEnum.enumValue2);
 				attributeItem.setSomeDate(date);
+				attributeItem.setDay(day);
 			}
 			{
 				final StringItem item1 = new StringItem("Test Provider 1");
