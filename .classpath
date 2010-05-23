@@ -12,7 +12,7 @@
 	<classpathentry kind="lib" path="lib/jwebunit/jwebunit-1.2.jar"/>
 	<classpathentry kind="lib" path="lib/jwebunit/nekohtml-0.8.1.jar"/>
 	<classpathentry kind="lib" path="lib/servlet-api.jar"/>
-	<classpathentry kind="lib" path="lib/trove.jar" sourcepath="lib/trove-src.jar"/>
+	<classpathentry kind="lib" path="lib/trove.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="lib/exedio-cops.jar" sourcepath="lib/exedio-cops.jar-src.zip"/>
 	<classpathentry kind="lib" path="lib/exedio-cope.jar" sourcepath="lib/exedio-cope.jar-src.zip"/>
