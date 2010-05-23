@@ -5,8 +5,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import com.exedio.cope.util.Day;
-import com.exedio.cops.Form;
-import com.exedio.cops.TextField;
 
 final class DayField extends TextField
 {

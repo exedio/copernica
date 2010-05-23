@@ -219,7 +219,7 @@ final class TypeCop_Jspm
 							else
 							{
 								if(df==null)
-									df = new SimpleDateFormat(com.exedio.cops.DateField.DATE_FORMAT_FULL);
+									df = new SimpleDateFormat(com.exedio.copernica.DateField.DATE_FORMAT_FULL);
 								%><%=df.format(value)%><%
 							}
 						}

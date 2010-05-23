@@ -265,6 +265,7 @@
 				<pathelement location="build/runtime/classes" />
 				<pathelement location="lib/exedio-cope.jar" />
 				<pathelement location="lib/exedio-cops.jar" />
+				<pathelement location="lib/commons-fileupload.jar" />
 				<pathelement location="lib/servlet-api.jar" />
 			</classpath>
 		</ljavac>
@@ -278,7 +279,7 @@
 	</target>
 	
 	<target name="copernica.jar" depends="copernica.compile">
-		<ljar name="copernica" jarfile="build/exedio-copernica.jar" classpath="exedio-cope.jar exedio-cops.jar">
+		<ljar name="copernica" jarfile="build/exedio-copernica.jar" classpath="exedio-cope.jar exedio-cops.jar commons-fileupload.jar">
 			<fileset dir="build/copernica/classes" />
 		</ljar>
 	</target>

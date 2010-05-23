@@ -46,16 +46,6 @@ import com.exedio.cope.SetValue;
 import com.exedio.cope.Type;
 import com.exedio.cope.UniqueViolationException;
 import com.exedio.cope.pattern.Media;
-import com.exedio.cops.CheckboxField;
-import com.exedio.cops.DateField;
-import com.exedio.cops.DoubleField;
-import com.exedio.cops.Field;
-import com.exedio.cops.Form;
-import com.exedio.cops.IntegerField;
-import com.exedio.cops.LongField;
-import com.exedio.cops.RadioField;
-import com.exedio.cops.StringField;
-import com.exedio.cops.TextField;
 
 final class ItemForm extends Form
 {
