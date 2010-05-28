@@ -7,3 +7,4 @@ TODO for copernica
 - save medias on "Save", not on upload
 - use <link rel="prev/next/copyright/home"
 - show warning on website, if account runs with empty/default/bad password
+- prevent Cross-Site Request Forgery
