@@ -493,6 +493,13 @@
 		<copy todir="${basedir}/build/success">
 			<fileset file="${basedir}/build/exedio-copernica.jar" />
 		</copy>
+		<copy file="ivy.xml" tofile="build/success/ivy.xml" overwrite="true">
+			<filterset>
+				<filter token="BUILD_REVISION" value="${build.revision}" />
+			</filterset>
+		</copy>
+		<copy tofile="${basedir}/build/success/exedio-copernica-log.txt"
+				file="CHANGELOG" />
 	</target>
 
 </project>
