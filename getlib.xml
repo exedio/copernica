@@ -7,6 +7,6 @@
 	<import file="${getlib.home}/getlib-contrib.xml"/>
 
 	<!-- the project uses several mysql libraries directly -->
-	<target name="getlib" depends="commons-fileupload, exedio-jspm, exedio-cops, exedio-cope, exedio-cope-console" />
+	<target name="getlib" depends="exedio-jspm, exedio-cops, exedio-cope, exedio-cope-console" />
 
 </project>

@@ -26,7 +26,7 @@ final class DayField extends TextField
 	 */
 	public DayField(final String pattern, final Form form, final Object key, final String name, final Day value)
 	{
-		super(form, key, name, (value==null) ? "" : (new SimpleDateFormat(pattern)).format(new Date(value.getTimeInMillis())));
+		super(form, key, name, (value==null) ? "" : (new SimpleDateFormat(pattern)).format(new Date(value.getTimeInMillisFrom())));
 
 		this.pattern = pattern;
 		this.content = value;
