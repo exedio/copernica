@@ -23,6 +23,6 @@
 		<copy overwrite="true" file="artifacts/hsqldb-1.8.0.8-jar.jar" tofile="../lib/jdbc/hsqldb.jar" />
 		<copy overwrite="true" file="artifacts/commons-fileupload-1.2.1-jar.jar" tofile="../lib/commons-fileupload.jar" />
 		<copy overwrite="true" file="artifacts/commons-io-1.3.2-jar.jar" tofile="../lib/commons-io.jar" />
-		<copy file="artifacts/junit-4.4-jar.jar" tofile="../lib/junit.jar" overwrite="true" />
+		<copy overwrite="true" file="artifacts/junit-4.4-jar.jar" tofile="../lib/junit.jar" />
 	</target>
 </project>
