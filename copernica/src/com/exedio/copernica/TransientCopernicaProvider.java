@@ -106,27 +106,27 @@ public abstract class TransientCopernicaProvider implements CopernicaProvider
 	
 	// Transient Sections
 	
-	private HashMap<Type, Collection<? extends Field>> transientMainAttributes = null;
-	private HashMap<Type, Collection<? extends CopernicaSection>> transientSections = null;
+	private HashMap<Type<?>, Collection<? extends Field<?>>> transientMainAttributes = null;
+	private HashMap<Type<?>, Collection<? extends CopernicaSection>> transientSections = null;
 	
-	protected final void setSections(final Type type, final Collection<? extends Field> mainAttributes, final Collection<? extends CopernicaSection> sections)
+	protected final void setSections(final Type<?> type, final Collection<? extends Field<?>> mainAttributes, final Collection<? extends CopernicaSection> sections)
 	{
 		if(transientMainAttributes==null)
 		{
-			transientMainAttributes = new HashMap<Type, Collection<? extends Field>>();
-			transientSections = new HashMap<Type, Collection<? extends CopernicaSection>>();
+			transientMainAttributes = new HashMap<Type<?>, Collection<? extends Field<?>>>();
+			transientSections = new HashMap<Type<?>, Collection<? extends CopernicaSection>>();
 		}
 
 		transientMainAttributes.put(type, mainAttributes);
 		transientSections.put(type, sections);
 	}
 	
-	public Collection<? extends Field> getMainAttributes(final Type type)
+	public Collection<? extends Field<?>> getMainAttributes(final Type<?> type)
 	{
 		return transientMainAttributes==null ? null : transientMainAttributes.get(type);
 	}
 	
-	public Collection<? extends CopernicaSection> getSections(final Type type)
+	public Collection<? extends CopernicaSection> getSections(final Type<?> type)
 	{
 		return transientSections==null ? null : transientSections.get(type);
 	}
@@ -180,7 +180,7 @@ public abstract class TransientCopernicaProvider implements CopernicaProvider
 			: "/";
 	}
 
-	public String getDisplayName(final CopernicaLanguage displayLanguage, final Type type)
+	public String getDisplayName(final CopernicaLanguage displayLanguage, final Type<?> type)
 	{
 		return breakupName(type.getID());
 	}
@@ -193,14 +193,14 @@ public abstract class TransientCopernicaProvider implements CopernicaProvider
 	
 	public String getDisplayName(final RequestCache cache, final CopernicaLanguage displayLanguage, final Item item)
 	{
-		final Type type = item.getCopeType();
-		final List uniqueConstraints = type.getUniqueConstraints();
+		final Type<?> type = item.getCopeType();
+		final List<UniqueConstraint> uniqueConstraints = type.getUniqueConstraints();
 		if(uniqueConstraints.isEmpty())
 			return item.toString();
 		else
 		{
 			final StringBuilder result = new StringBuilder();
-			final UniqueConstraint uniqueConstraint = (UniqueConstraint)uniqueConstraints.iterator().next();
+			final UniqueConstraint uniqueConstraint = uniqueConstraints.iterator().next();
 			boolean first = true;
 			for(final FunctionField<?> attribute : uniqueConstraint.getFields())
 			{
@@ -225,12 +225,12 @@ public abstract class TransientCopernicaProvider implements CopernicaProvider
 		}
 	}
 	
-	protected final void putDisplayName(final TransientLanguage transientLanguage, final Enum value, final String name)
+	protected final void putDisplayName(final TransientLanguage transientLanguage, final Enum<?> value, final String name)
 	{
 		transientLanguage.enumerationValueNames.put(value, name);
 	}
 	
-	public String getDisplayName(final CopernicaLanguage displayLanguage, final Enum value)
+	public String getDisplayName(final CopernicaLanguage displayLanguage, final Enum<?> value)
 	{
 		if(displayLanguage instanceof TransientLanguage)
 		{
@@ -243,7 +243,7 @@ public abstract class TransientCopernicaProvider implements CopernicaProvider
 		return value.name();
 	}
 
-	public String getIconURL(final Type type)
+	public String getIconURL(final Type<?> type)
 	{
 		return null;
 	}
@@ -267,7 +267,7 @@ public abstract class TransientCopernicaProvider implements CopernicaProvider
 	}
 
 
-	public int getLimitCeiling(final Type type)
+	public int getLimitCeiling(final Type<?> type)
 	{
 		return 500;
 	}

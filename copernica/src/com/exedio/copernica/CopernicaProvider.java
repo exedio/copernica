@@ -46,9 +46,9 @@ public interface CopernicaProvider
 	
 	Collection<? extends CopernicaCategory> getRootCategories();
 	
-	Collection<? extends Field> getMainAttributes(Type type);
+	Collection<? extends Field<?>> getMainAttributes(Type<?> type);
 
-	Collection<? extends CopernicaSection> getSections(Type type);
+	Collection<? extends CopernicaSection> getSections(Type<?> type);
 	
 	String getDisplayNameNull(CopernicaLanguage displayLanguage);
 
@@ -56,15 +56,15 @@ public interface CopernicaProvider
 	
 	String getDisplayNameOff(CopernicaLanguage displayLanguage);
 
-	String getDisplayName(CopernicaLanguage displayLanguage, Type type);
+	String getDisplayName(CopernicaLanguage displayLanguage, Type<?> type);
 
 	String getDisplayName(CopernicaLanguage displayLanguage, Feature feature);
 	
 	String getDisplayName(RequestCache cache, CopernicaLanguage displayLanguage, Item item);
 
-	String getDisplayName(CopernicaLanguage displayLanguage, Enum value);
+	String getDisplayName(CopernicaLanguage displayLanguage, Enum<?> value);
 
-	String getIconURL(Type type);
+	String getIconURL(Type<?> type);
 
 	CopernicaLanguage findLanguageByID(String copernicaID);
 	
@@ -79,6 +79,6 @@ public interface CopernicaProvider
 	void handleException(PrintStream out, CopernicaServlet servlet, HttpServletRequest request, Exception e)
 		throws IOException;
 	
-	int getLimitCeiling(Type type);
+	int getLimitCeiling(Type<?> type);
 	
 }

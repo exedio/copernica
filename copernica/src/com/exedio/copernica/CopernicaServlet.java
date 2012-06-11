@@ -175,7 +175,7 @@ public final class CopernicaServlet extends CopsServlet
 			}
 			else
 			{
-				final Class providerClass = Class.forName(providerName);
+				final Class<?> providerClass = Class.forName(providerName);
 				final CopernicaProvider provider = (CopernicaProvider)providerClass.newInstance();
 				connectToken = provider.connect(config, "servlet \"" + config.getServletName() +'"' + ' ' + '(' + providerClass.getName() + ')');
 				return provider;

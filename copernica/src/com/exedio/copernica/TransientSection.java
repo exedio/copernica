@@ -29,15 +29,15 @@ public class TransientSection
 	extends TransientComponent
 	implements CopernicaSection
 {
-	private final List<? extends Field> attributes;
+	private final List<? extends Field<?>> attributes;
 	
-	public TransientSection(final String id, final Field[] attributes)
+	public TransientSection(final String id, final Field<?>[] attributes)
 	{
 		super(id);
 		this.attributes = Collections.unmodifiableList(Arrays.asList(attributes));
 	}
 	
-	public Collection<? extends Field> getCopernicaAttributes()
+	public Collection<? extends Field<?>> getCopernicaAttributes()
 	{
 		return attributes;
 	}

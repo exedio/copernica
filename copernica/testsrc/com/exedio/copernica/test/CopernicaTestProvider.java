@@ -61,7 +61,7 @@ public class CopernicaTestProvider extends TransientCopernicaProvider
 		);
 		
 		setSections(AttributeItem.TYPE,
-			Arrays.asList(new Field[]{AttributeItem.someString, AttributeItem.someNotNullString}),
+			Arrays.asList(new Field<?>[]{AttributeItem.someString, AttributeItem.someNotNullString}),
 			Arrays.asList(new TransientSection[]
 			{
 				new TransientSection("numbers", new Field[] {

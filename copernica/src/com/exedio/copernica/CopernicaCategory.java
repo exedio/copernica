@@ -26,6 +26,6 @@ public interface CopernicaCategory extends Component
 {
 	public Collection<? extends CopernicaCategory> getCopernicaSubCategories();
 	
-	public Collection<Type> getCopernicaTypes();
+	public Collection<Type<?>> getCopernicaTypes();
 	
 }
