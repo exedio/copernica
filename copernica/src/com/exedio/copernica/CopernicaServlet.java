@@ -76,7 +76,6 @@ public final class CopernicaServlet extends CopsServlet
 	
 	private ConnectToken connectToken = null;
 	private CopernicaProvider provider = null;
-	private boolean checked;
 
 	static final Resource stylesheet = new Resource("copernica.css");
 	static final Resource logo = new Resource("exedio.png");
@@ -93,7 +92,6 @@ public final class CopernicaServlet extends CopsServlet
 		}
 		
 		this.provider = createProvider();
-		this.checked = false;
 	}
 
 	@Override
@@ -115,14 +113,6 @@ public final class CopernicaServlet extends CopsServlet
 		try
 		{
 			final Model model = provider.getModel();
-
-			if(!checked)
-			{
-				model.startTransaction("copernica.checkDatabase");
-				model.checkSchema();
-				checked = true;
-				model.commit();
-			}
 
 			model.startTransaction("copernica");
 
