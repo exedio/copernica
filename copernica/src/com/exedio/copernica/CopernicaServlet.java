@@ -25,6 +25,7 @@ import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import static javax.servlet.http.HttpServletResponse.SC_INTERNAL_SERVER_ERROR;
 
 import com.exedio.cope.Model;
 import com.exedio.cope.misc.ConnectToken;
@@ -138,7 +139,7 @@ public final class CopernicaServlet extends CopsServlet
 		catch(Exception e)
 		{
 			provider.getModel().rollback();
-			response.setStatus(response.SC_INTERNAL_SERVER_ERROR);
+			response.setStatus(SC_INTERNAL_SERVER_ERROR);
 			if(out==null)
 				out = new PrintStream(response.getOutputStream(), false, UTF8);
 
