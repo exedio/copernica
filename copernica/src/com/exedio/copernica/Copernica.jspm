@@ -178,7 +178,7 @@ public final class Copernica_Jspm
 		final CopernicaLanguage language = cop.language;
 %>
 		<ul id="typelist"><%
-		for(final Type type : provider.getModel().getTypes())
+		for(final Type<?> type : provider.getModel().getTypes())
 		{
 			final String name = provider.getDisplayName(language, type);
 			final boolean active = cop.isType(type);
@@ -211,9 +211,9 @@ public final class Copernica_Jspm
 	public static final void writeParameters(final PrintStream out, final HttpServletRequest request)
 		throws IOException
 	{
-		for( final Iterator it = request.getParameterMap().entrySet().iterator(); it.hasNext(); )
+		for( final Iterator<?> it = request.getParameterMap().entrySet().iterator(); it.hasNext(); )
 		{
-			final Map.Entry entry = (Map.Entry)it.next();
+			final Map.Entry<?,?> entry = (Map.Entry<?,?>)it.next();
 			%>
 			<small>param</small> &gt;<%=entry.getKey()%>&lt; :<%
 			final String[] values = (String[])entry.getValue();
@@ -223,7 +223,7 @@ public final class Copernica_Jspm
 			}
 			%><br><%
 		}
-		for( final Enumeration it = request.getHeaderNames(); it.hasMoreElements(); )
+		for( final Enumeration<?> it = request.getHeaderNames(); it.hasMoreElements(); )
 		{
 			final String name = (String)it.nextElement();
 			%>

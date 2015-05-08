@@ -99,7 +99,7 @@ class ItemCop_Jspm
 				}
 				%>
 				<table border="1"><%
-				for(final com.exedio.cope.Field attribute : form.displayedAttributes)
+				for(final com.exedio.cope.Field<?> attribute : form.displayedAttributes)
 				{
 					final Field field = form.getFieldByKey(attribute);
 					%>

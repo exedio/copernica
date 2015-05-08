@@ -99,8 +99,8 @@ final class TypeCop_Jspm
 	{
 		final CopernicaProvider provider = cop.provider;
 		final CopernicaLanguage language = cop.language;
-		final Type type = cop.type;
-		final List items = cop.getItems();
+		final Type<?> type = cop.type;
+		final List<?> items = cop.getItems();
 			
 			%>
 			<h1>
@@ -111,8 +111,8 @@ final class TypeCop_Jspm
 			<table id="item">
 				<tr>
 					<th></th><%
-				final List features = type.getFeatures();
-				for(Iterator i = features.iterator(); i.hasNext(); )
+				final List<?> features = type.getFeatures();
+				for(Iterator<?> i = features.iterator(); i.hasNext(); )
 				{
 					final Feature feature = (Feature)i.next();
 					if(!((feature instanceof Function) || (feature instanceof MediaPath)))
@@ -124,7 +124,7 @@ final class TypeCop_Jspm
 				</tr>
 				<tr>
 					<th></th><%
-				for(Iterator i = features.iterator(); i.hasNext(); )
+				for(Iterator<?> i = features.iterator(); i.hasNext(); )
 				{
 					final Feature feature = (Feature)i.next();
 					if(!((feature instanceof Function) || (feature instanceof MediaPath)))
@@ -133,7 +133,7 @@ final class TypeCop_Jspm
 					<th class="orderby"><%
 					if(feature instanceof Function)
 					{
-						final Function function = (Function)feature;
+						final Function<?> function = (Function<?>)feature;
 						%>
 						<a href="<%=cop.orderBy(function, true)%>"<%
 						if(feature == cop.orderBy && cop.orderAscending)
@@ -162,13 +162,13 @@ final class TypeCop_Jspm
 				{
 				SimpleDateFormat df = null;
 				
-				for(Iterator i = items.iterator(); i.hasNext(); )
+				for(Iterator<?> i = items.iterator(); i.hasNext(); )
 				{
 					final Item item = (Item)i.next();
 					%>
 				<tr>
 					<td><a href="<%=(cop.toItem(item))%>"><%=cop.getDisplayName(language, item)%></a></td><%
-					for(Iterator j = features.iterator(); j.hasNext(); )
+					for(Iterator<?> j = features.iterator(); j.hasNext(); )
 					{
 						final Feature feature = (Feature)j.next();
 						if(!((feature instanceof Function) || (feature instanceof MediaPath)))
@@ -225,7 +225,7 @@ final class TypeCop_Jspm
 						}
 						else if(feature instanceof EnumField)
 						{
-							final Enum value = ((EnumField<?>)feature).get(item);
+							final Enum<?> value = ((EnumField<?>)feature).get(item);
 							if(value==null)
 							{
 								%><%=cop.getDisplayNameNull()%><%
