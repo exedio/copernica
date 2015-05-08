@@ -26,7 +26,7 @@ import com.exedio.cope.Type;
 
 public class Main
 {
-	public static final Type[] modelTypes = new Type[]
+	public static final Type<?>[] modelTypes = new Type[]
 	{
 		ItemWithSingleUnique.TYPE,
 		UniqueFinal.TYPE,

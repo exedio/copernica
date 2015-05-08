@@ -37,21 +37,21 @@ final class TypeCop extends CopernicaCop
 	private static final String ORDER_DESCENDING = "od";
 	private static final Pager.Config PAGER_CONFIG = new Pager.Config(10, 20, 50, 100, 200, 500);
 
-	final Type type;
-	final Function orderBy;
+	final Type<?> type;
+	final Function<?> orderBy;
 	final boolean orderAscending;
 	final Pager pager;
 
-	private Query.Result queryResult = null;
+	private Query.Result<?> queryResult = null;
 	private List<QueryInfo> queryInfos;
 
-	TypeCop(final CopernicaProvider provider, final CopernicaLanguage language, final Type type)
+	TypeCop(final CopernicaProvider provider, final CopernicaLanguage language, final Type<?> type)
 	{
 		this(provider, language, type, null, true, PAGER_CONFIG.newPager());
 	}
 	
-	TypeCop(final CopernicaProvider provider, final CopernicaLanguage language, final Type type,
-					final Function orderBy, final boolean orderAscending,
+	TypeCop(final CopernicaProvider provider, final CopernicaLanguage language, final Type<?> type,
+					final Function<?> orderBy, final boolean orderAscending,
 					final Pager pager)
 	{
 		super("type", provider, language);
@@ -75,7 +75,7 @@ final class TypeCop extends CopernicaCop
 	}
 	
 	@Override
-	final boolean isType(final Type type)
+	final boolean isType(final Type<?> type)
 	{
 		return this.type == type;
 	}
@@ -103,12 +103,12 @@ final class TypeCop extends CopernicaCop
 		return pager!=null ? new TypeCop(provider, language, type, orderBy, orderAscending, pager) : null;
 	}
 	
-	final TypeCop orderBy(final Function newOrderBy, final boolean ascending)
+	final TypeCop orderBy(final Function<?> newOrderBy, final boolean ascending)
 	{
 		return new TypeCop(provider, language, type, newOrderBy, ascending, pager);
 	}
 
-	final List getItems()
+	final List<?> getItems()
 	{
 		return queryResult.getData();
 	}
@@ -124,7 +124,7 @@ final class TypeCop extends CopernicaCop
 		super.init(request);
 		assert queryResult==null;
 		
-		final Query query = type.newQuery(null);
+		final Query<?> query = type.newQuery(null);
 		if(orderBy!=null)
 			query.setOrderByAndThis(orderBy, orderAscending);
 		else
@@ -153,7 +153,7 @@ final class TypeCop extends CopernicaCop
 			final String typeID,
 			final HttpServletRequest request)
 	{
-		final Type type = provider.getModel().getType(typeID);
+		final Type<?> type = provider.getModel().getType(typeID);
 		if(type==null)
 			throw new RuntimeException("type "+typeID+" not available");
 
@@ -161,7 +161,7 @@ final class TypeCop extends CopernicaCop
 		final String orderDescendingID = request.getParameter(ORDER_DESCENDING);
 		final boolean orderAscending = orderAscendingID!=null;
 		final String orderID = orderAscending ? orderAscendingID : orderDescendingID;
-		final Function orderBy = (orderID==null) ? null : (Function)type.getFeature(orderID);
+		final Function<?> orderBy = (orderID==null) ? null : (Function<?>)type.getFeature(orderID);
 
 		return new TypeCop(
 				provider, language, type,

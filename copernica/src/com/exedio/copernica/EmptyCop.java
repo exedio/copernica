@@ -35,7 +35,7 @@ final class EmptyCop extends CopernicaCop
 	}
 
 	@Override
-	final boolean isType(final Type type)
+	final boolean isType(final Type<?> type)
 	{
 		return false;
 	}

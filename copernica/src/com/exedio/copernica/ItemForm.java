@@ -59,7 +59,7 @@ final class ItemForm extends Form
 	/*TODO final*/ boolean hasFiles;
 	boolean toSave = false;
 	final CopernicaSection currentSection;
-	final List<com.exedio.cope.Field> displayedAttributes;
+	final List<com.exedio.cope.Field<?>> displayedAttributes;
 	boolean deleted = false;
 	String deletedName = null;
 	String deletedError = null;
@@ -72,8 +72,8 @@ final class ItemForm extends Form
 		this.type = item.getCopeType();
 		final CopernicaProvider provider = cop.provider;
 		final Model model = provider.getModel();
-		final List<com.exedio.cope.Field> hiddenAttributes;
-		final Collection sections = provider.getSections(type);
+		final List<com.exedio.cope.Field<?>> hiddenAttributes;
+		final Collection<?> sections = provider.getSections(type);
 		final ArrayList<Field> visibleFields = new ArrayList<Field>();
 
 		boolean sectionButton = false;
@@ -85,7 +85,7 @@ final class ItemForm extends Form
 				CopernicaSection firstSection = null;
 				final String previousSectionParam = getParameter(SECTION);
 				
-				for(Iterator i = sections.iterator(); i.hasNext(); )
+				for(Iterator<?> i = sections.iterator(); i.hasNext(); )
 				{
 					final CopernicaSection section = (CopernicaSection)i.next();
 					if(firstSection==null)
@@ -110,13 +110,13 @@ final class ItemForm extends Form
 					currentSection = firstSection;
 			}
 
-			displayedAttributes = new ArrayList<com.exedio.cope.Field>(provider.getMainAttributes(type));
-			hiddenAttributes = new ArrayList<com.exedio.cope.Field>();
-			for(Iterator i = sections.iterator(); i.hasNext(); )
+			displayedAttributes = new ArrayList<com.exedio.cope.Field<?>>(provider.getMainAttributes(type));
+			hiddenAttributes = new ArrayList<com.exedio.cope.Field<?>>();
+			for(Iterator<?> i = sections.iterator(); i.hasNext(); )
 			{
 				final CopernicaSection section = (CopernicaSection)i.next();
 				new Section(section.getCopernicaID(), section.getCopernicaName(cop.language));
-				final Collection<? extends com.exedio.cope.Field> sectionAttributes = section.getCopernicaAttributes();
+				final Collection<? extends com.exedio.cope.Field<?>> sectionAttributes = section.getCopernicaAttributes();
 				if(section.equals(currentSection))
 					displayedAttributes.addAll(sectionAttributes);
 				else
@@ -126,10 +126,10 @@ final class ItemForm extends Form
 		else
 		{
 			currentSection = null;
-			displayedAttributes = type.getFields();
-			hiddenAttributes = Collections.<com.exedio.cope.Field>emptyList();
+			displayedAttributes = cast(type.getFields());
+			hiddenAttributes = Collections.<com.exedio.cope.Field<?>>emptyList();
 		}
-		final ArrayList<com.exedio.cope.Field> attributes = new ArrayList<com.exedio.cope.Field>(displayedAttributes.size()+hiddenAttributes.size());
+		final ArrayList<com.exedio.cope.Field<?>> attributes = new ArrayList<com.exedio.cope.Field<?>>(displayedAttributes.size()+hiddenAttributes.size());
 		attributes.addAll(displayedAttributes);
 		attributes.addAll(hiddenAttributes);
 
@@ -153,13 +153,13 @@ final class ItemForm extends Form
 		final boolean post = save || sectionButton || getParameter(CHECK_BUTTON)!=null;
 		boolean hasFilesTemp = false;
 		
-		for(final com.exedio.cope.Field anyAttribute : attributes)
+		for(final com.exedio.cope.Field<?> anyAttribute : attributes)
 		{
 			if(!anyAttribute.isFinal())
 			{
 				if(anyAttribute instanceof FunctionField)
 				{
-					final Field field = createField((FunctionField)anyAttribute, post, cop, model);
+					final Field field = createField((FunctionField<?>)anyAttribute, post, cop, model);
 					toSave = true;
 					if(displayedAttributes.contains(anyAttribute))
 						visibleFields.add(field);
@@ -178,14 +178,14 @@ final class ItemForm extends Form
 	}
 	
 	private final Field createField(
-			final FunctionField attribute,
+			final FunctionField<?> attribute,
 			final boolean post, final ItemCop cop, final Model model)
 	{
 		return createField(attribute, this.item, attribute.getName(), post, cop, model);
 	}
 	
 	private final Field createField(
-			final FunctionField attribute, final Item item, final String name,
+			final FunctionField<?> attribute, final Item item, final String name,
 			final boolean post, final ItemCop cop, final Model model)
 	{
 		if(attribute.isFinal())
@@ -193,7 +193,7 @@ final class ItemForm extends Form
 		
 		if(attribute instanceof com.exedio.cope.EnumField)
 		{
-			final com.exedio.cope.EnumField<? extends Enum> enumAttribute = (com.exedio.cope.EnumField<?>)attribute;
+			final com.exedio.cope.EnumField<? extends Enum<?>> enumAttribute = (com.exedio.cope.EnumField<?>)attribute;
 			if(post)
 				return new EnumField(enumAttribute, cop);
 			else
@@ -336,13 +336,13 @@ final class ItemForm extends Form
 	{
 		private static final String VALUE_NULL = "null";
 
-		final com.exedio.cope.EnumField<? extends Enum> attribute;
-		final Enum content;
+		final com.exedio.cope.EnumField<? extends Enum<?>> attribute;
+		final Enum<?> content;
 
 		/**
 		 * Constructs a form field with an initial value.
 		 */
-		EnumField(final com.exedio.cope.EnumField<? extends Enum> attribute, final Enum value, final ItemCop cop)
+		EnumField(final com.exedio.cope.EnumField<? extends Enum<?>> attribute, final Enum<?> value, final ItemCop cop)
 		{
 			super(ItemForm.this, attribute, attribute.getName(), (value==null) ? VALUE_NULL : value.name());
 			
@@ -354,7 +354,7 @@ final class ItemForm extends Form
 		/**
 		 * Constructs a form field with a value obtained from the submitted form.
 		 */
-		EnumField(final com.exedio.cope.EnumField<? extends Enum> attribute, final ItemCop cop)
+		EnumField(final com.exedio.cope.EnumField<? extends Enum<?>> attribute, final ItemCop cop)
 		{
 			super(ItemForm.this, attribute, attribute.getName());
 			
@@ -378,7 +378,7 @@ final class ItemForm extends Form
 			{
 				addOption(VALUE_NULL, cop.getDisplayNameNull());
 			}
-			for(final Enum currentValue : attribute.getValues())
+			for(final Enum<?> currentValue : attribute.getValues())
 			{
 				final String currentCode = currentValue.name();
 				final String currentName = cop.getDisplayName(currentValue);
@@ -449,9 +449,9 @@ final class ItemForm extends Form
 
 	private void save()
 	{
-		final ArrayList<SetValue> setValues = new ArrayList<SetValue>();
+		final ArrayList<SetValue<?>> setValues = new ArrayList<SetValue<?>>();
 		
-		for(Iterator i = getFields().iterator(); i.hasNext(); )
+		for(Iterator<?> i = getFields().iterator(); i.hasNext(); )
 		{
 			final Field field = (Field)i.next();
 			if(field.key instanceof DataField)
@@ -483,7 +483,7 @@ final class ItemForm extends Form
 			}
 			if(field.error==null)
 			{
-				final FunctionField<?> attribute = (FunctionField)field.key;
+				final FunctionField<?> attribute = (FunctionField<?>)field.key;
 				setValues.add(Cope.mapAndCast(attribute, field.getContent()));
 			}
 		}
@@ -510,5 +510,11 @@ final class ItemForm extends Form
 			final Field field = getFieldByKey(e.getFeature());
 			field.error = e.getClass().getName();
 		}
+	}
+	
+	@SuppressWarnings({"rawtypes", "unchecked"})
+	private static final List<com.exedio.cope.Field<?>> cast(final List<com.exedio.cope.Field> o)
+	{
+		return (List)o;
 	}
 }

@@ -53,7 +53,7 @@ final class ItemCop extends CopernicaCop
 	}
 
 	@Override
-	final boolean isType(final Type type)
+	final boolean isType(final Type<?> type)
 	{
 		return item.getCopeType() == type;
 	}

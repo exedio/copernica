@@ -55,7 +55,7 @@ abstract class CopernicaCop extends Cop implements RequestCache
 	}
 	
 	abstract CopernicaCop switchLanguage(CopernicaLanguage newLanguage);
-	abstract boolean isType(final Type type);
+	abstract boolean isType(final Type<?> type);
 	abstract String getTitle();
 
 	final EmptyCop toHome()
@@ -73,7 +73,7 @@ abstract class CopernicaCop extends Cop implements RequestCache
 		return null;
 	}
 	
-	final TypeCop toType(final Type newType)
+	final TypeCop toType(final Type<?> newType)
 	{
 		return new TypeCop(provider, language, newType);
 	}
@@ -175,15 +175,15 @@ abstract class CopernicaCop extends Cop implements RequestCache
 		}
 	}
 	
-	private HashMap<Enum, String> enumDisplayNames = null;
+	private HashMap<Enum<?>, String> enumDisplayNames = null;
 	//private int enumDisplayNamesHits = 0;
 	//private int enumDisplayNamesMisses = 0;
 	
-	public String getDisplayName(final Enum enumerationValue)
+	public String getDisplayName(final Enum<?> enumerationValue)
 	{
 		if(enumDisplayNames==null)
 		{
-			enumDisplayNames = new HashMap<Enum, String>();
+			enumDisplayNames = new HashMap<Enum<?>, String>();
 		}
 		else
 		{

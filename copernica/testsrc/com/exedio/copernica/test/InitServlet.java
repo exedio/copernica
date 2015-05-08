@@ -119,7 +119,7 @@ public class InitServlet extends CopsServlet
 	{
 		try
 		{
-			final Class thisClass = CopernicaProvider.class;
+			final Class<?> thisClass = CopernicaProvider.class;
 			{
 				final ItemWithSingleUnique item1 = new ItemWithSingleUnique();
 				item1.setUniqueString("item1");
