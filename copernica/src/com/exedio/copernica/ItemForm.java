@@ -489,7 +489,7 @@ final class ItemForm extends Form
 		}
 		try
 		{
-			item.set(setValues.toArray(new SetValue[setValues.size()]));
+			item.set(setValues.toArray(new SetValue<?>[setValues.size()]));
 		}
 		catch(MandatoryViolationException e)
 		{

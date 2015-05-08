@@ -64,7 +64,7 @@ public class CopernicaTestProvider extends TransientCopernicaProvider
 			Arrays.asList(new Field<?>[]{AttributeItem.someString, AttributeItem.someNotNullString}),
 			Arrays.asList(new TransientSection[]
 			{
-				new TransientSection("numbers", new Field[] {
+				new TransientSection("numbers", new Field<?>[] {
 						AttributeItem.someInteger,
 						AttributeItem.someLong,
 						AttributeItem.someDouble,
@@ -72,12 +72,12 @@ public class CopernicaTestProvider extends TransientCopernicaProvider
 						AttributeItem.someNotNullLong,
 						AttributeItem.someNotNullDouble,
 						}),
-				new TransientSection("data", new Field[]{
+				new TransientSection("data", new Field<?>[]{
 						AttributeItem.someEnum,
 						AttributeItem.someNotNullEnum,
 						AttributeItem.someData.getBody(), // TODO should specify someData here
 						}),
-				new TransientSection("other", new Field[]{
+				new TransientSection("other", new Field<?>[]{
 						AttributeItem.someDate,
 						AttributeItem.someBoolean,
 						AttributeItem.someNotNullBoolean,
