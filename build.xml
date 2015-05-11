@@ -202,7 +202,7 @@
 	<!-- runtime -->
 
 	<target name="runtime.testmodel.instrument" unless="skip.instrument">
-		<instrument finalArgs="true" createDeprecated="true" suppressUnusedWarningOnPrivateActivationConstructor="true" verbose="false">
+		<instrument finalArgs="true" suppressUnusedWarningOnPrivateActivationConstructor="true" verbose="false">
 			<fileset dir="runtime/testmodelsrc/com/exedio/cope/testmodel">
 				<include name="**/*.java" />
 			</fileset>
@@ -229,11 +229,13 @@
 		<taskdef name="instrument" classname="com.exedio.cope.instrument.AntTask">
 			<classpath>
 				<pathelement location="lib/exedio-cope-instrument.jar" />
+				<pathelement location="lib/exedio-cope-instrument-annotations.jar" />
 				<pathelement location="lib/trove.jar" />
 				<pathelement location="lib/servlet-api.jar" />
 				<pathelement location="lib/commons-fileupload.jar" />
 				<pathelement location="lib/bsh-core.jar" />
 				<pathelement location="lib/cojen.jar" />
+				<pathelement location="lib/log4j-bundle.jar" />
 				<pathelement location="lib/junit.jar" />
 				<pathelement location="build/runtime/classes" />
 				<pathelement location="build/instrument/classes" />
@@ -266,6 +268,7 @@
 				<pathelement location="lib/exedio-cops.jar" />
 				<pathelement location="lib/commons-fileupload.jar" />
 				<pathelement location="lib/servlet-api.jar" />
+				<pathelement location="lib/exedio-cope-instrument-annotations.jar" />
 			</classpath>
 		</ljavac>
 		<copy todir="build/copernica/classes">
@@ -300,6 +303,7 @@
 				<pathelement location="lib/exedio-cops.jar" />
 				<pathelement location="lib/junit.jar" />
 				<pathelement location="lib/servlet-api.jar" />
+				<pathelement location="lib/exedio-cope-instrument-annotations.jar" />
 			</classpath>
 		</ljavac>
 		<copy todir="build/copernica/testclasses/com/exedio/copernica">
@@ -327,6 +331,7 @@
 					<fileset file="lib/exedio-cope-console.jar" />
 					<fileset file="lib/exedio-cope-util.jar" />
 					<fileset file="lib/@{env.driver}" />
+					<fileset file="lib/log4j-bundle.jar" />
 				</copy>
 
 				<copy tofile="build/copernica/web-@{env}/WEB-INF/cope.properties" file="@{env.file}" />

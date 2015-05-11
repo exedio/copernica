@@ -126,7 +126,7 @@ final class ItemForm extends Form
 		else
 		{
 			currentSection = null;
-			displayedAttributes = cast(type.getFields());
+			displayedAttributes = type.getFields();
 			hiddenAttributes = Collections.<com.exedio.cope.Field<?>>emptyList();
 		}
 		final ArrayList<com.exedio.cope.Field<?>> attributes = new ArrayList<com.exedio.cope.Field<?>>(displayedAttributes.size()+hiddenAttributes.size());
@@ -510,11 +510,5 @@ final class ItemForm extends Form
 			final Field field = getFieldByKey(e.getFeature());
 			field.error = e.getClass().getName();
 		}
-	}
-
-	@SuppressWarnings({"rawtypes", "unchecked"})
-	private static final List<com.exedio.cope.Field<?>> cast(final List<com.exedio.cope.Field> o)
-	{
-		return (List)o;
 	}
 }
