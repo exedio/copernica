@@ -151,7 +151,7 @@ public final class CopernicaServlet extends CopsServlet
 		}
 	}
 
-	private final CopernicaProvider createProvider() throws ServletException
+	private final CopernicaProvider createProvider()
 	{
 		try
 		{
