@@ -208,7 +208,7 @@
 	<!-- runtime -->
 
 	<target name="runtime.testmodel.instrument" unless="skip.instrument">
-		<instrument verify="${instrument.verify}" finalArgs="true" suppressUnusedWarningOnPrivateActivationConstructor="true" annotateGenerated="false" verbose="false">
+		<instrument verify="${instrument.verify}" verbose="false">
 			<fileset dir="runtime/testmodelsrc/com/exedio/cope/testmodel">
 				<include name="**/*.java" />
 			</fileset>
