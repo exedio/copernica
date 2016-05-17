@@ -53,7 +53,7 @@ final class ItemForm extends Form
 	static final String CHECK_BUTTON = "CHECK";
 	static final String DELETE_BUTTON = "DELETE";
 	static final String SECTION = "section";
-	
+
 	final Item item;
 	final Type<? extends Item> type;
 	/*TODO final*/ boolean hasFiles;
@@ -63,11 +63,11 @@ final class ItemForm extends Form
 	boolean deleted = false;
 	String deletedName = null;
 	String deletedError = null;
-	
+
 	ItemForm(final ItemCop cop, final HttpServletRequest request)
 	{
 		super(request);
-		
+
 		this.item = cop.item;
 		this.type = item.getCopeType();
 		final CopernicaProvider provider = cop.provider;
@@ -84,13 +84,13 @@ final class ItemForm extends Form
 				CopernicaSection previousSection = null;
 				CopernicaSection firstSection = null;
 				final String previousSectionParam = getParameter(SECTION);
-				
+
 				for(Iterator<?> i = sections.iterator(); i.hasNext(); )
 				{
 					final CopernicaSection section = (CopernicaSection)i.next();
 					if(firstSection==null)
 						firstSection = section;
-					
+
 					final String id = section.getCopernicaID();
 					if(getParameter(id)!=null)
 					{
@@ -152,7 +152,7 @@ final class ItemForm extends Form
 		final boolean save = getParameter(SAVE_BUTTON)!=null;
 		final boolean post = save || sectionButton || getParameter(CHECK_BUTTON)!=null;
 		boolean hasFilesTemp = false;
-		
+
 		for(final com.exedio.cope.Field<?> anyAttribute : attributes)
 		{
 			if(!anyAttribute.isFinal())
@@ -176,21 +176,21 @@ final class ItemForm extends Form
 		if(save)
 			save();
 	}
-	
+
 	private final Field createField(
 			final FunctionField<?> attribute,
 			final boolean post, final ItemCop cop, final Model model)
 	{
 		return createField(attribute, this.item, attribute.getName(), post, cop, model);
 	}
-	
+
 	private final Field createField(
 			final FunctionField<?> attribute, final Item item, final String name,
 			final boolean post, final ItemCop cop, final Model model)
 	{
 		if(attribute.isFinal())
 			throw new RuntimeException(attribute.toString());
-		
+
 		if(attribute instanceof com.exedio.cope.EnumField)
 		{
 			final com.exedio.cope.EnumField<? extends Enum<?>> enumAttribute = (com.exedio.cope.EnumField<?>)attribute;
@@ -271,13 +271,13 @@ final class ItemForm extends Form
 			throw new RuntimeException(attribute.getClass().toString());
 		}
 	}
-	
+
 	public class ItemField extends TextField
 	{
 		final Model model;
 		final ItemCop cop;
 		final Item content;
-		
+
 		/**
 		 * Constructs a form field with an initial value.
 		 */
@@ -289,7 +289,7 @@ final class ItemForm extends Form
 			this.cop = cop;
 			this.content = value;
 		}
-		
+
 		/**
 		 * Constructs a form field with a value obtained from the submitted form.
 		 */
@@ -323,15 +323,15 @@ final class ItemForm extends Form
 			super.writeIt(out);
 			ItemCop_Jspm.write(out, this);
 		}
-		
+
 		@Override
 		public Object getContent()
 		{
 			return content;
 		}
-		
+
 	}
-	
+
 	final class EnumField extends RadioField
 	{
 		private static final String VALUE_NULL = "null";
@@ -345,19 +345,19 @@ final class ItemForm extends Form
 		EnumField(final com.exedio.cope.EnumField<? extends Enum<?>> attribute, final Enum<?> value, final ItemCop cop)
 		{
 			super(ItemForm.this, attribute, attribute.getName(), (value==null) ? VALUE_NULL : value.name());
-			
+
 			this.attribute = attribute;
 			this.content = value;
 			addOptions(cop);
 		}
-	
+
 		/**
 		 * Constructs a form field with a value obtained from the submitted form.
 		 */
 		EnumField(final com.exedio.cope.EnumField<? extends Enum<?>> attribute, final ItemCop cop)
 		{
 			super(ItemForm.this, attribute, attribute.getName());
-			
+
 			this.attribute = attribute;
 			addOptions(cop);
 
@@ -371,7 +371,7 @@ final class ItemForm extends Form
 					throw new RuntimeException(value);
 			}
 		}
-		
+
 		private void addOptions(final ItemCop cop)
 		{
 			if(!attribute.isMandatory())
@@ -385,7 +385,7 @@ final class ItemForm extends Form
 				addOption(currentCode, currentName);
 			}
 		}
-	
+
 		@Override
 		public Object getContent()
 		{
@@ -393,13 +393,13 @@ final class ItemForm extends Form
 		}
 
 	}
-	
+
 	final class BooleanEnumField extends RadioField
 	{
 		private static final String VALUE_NULL = "null";
 		private static final String VALUE_ON = "on";
 		private static final String VALUE_OFF = "off";
-		
+
 		final Boolean content;
 
 		/**
@@ -408,11 +408,11 @@ final class ItemForm extends Form
 		BooleanEnumField(final BooleanField attribute, final Boolean value, final ItemCop cop)
 		{
 			super(ItemForm.this, attribute, attribute.getName(), value==null ? VALUE_NULL : value.booleanValue() ? VALUE_ON : VALUE_OFF);
-			
+
 			this.content = value;
 			addOptions(cop);
 		}
-		
+
 		/**
 		 * Constructs a form field with a value obtained from the submitted form.
 		 */
@@ -431,26 +431,26 @@ final class ItemForm extends Form
 			else
 				throw new RuntimeException(value);
 		}
-		
+
 		private final void addOptions(final ItemCop cop)
 		{
 			addOption(VALUE_NULL, cop.getDisplayNameNull());
 			addOption(VALUE_ON, cop.getDisplayNameOn());
 			addOption(VALUE_OFF, cop.getDisplayNameOff());
 		}
-		
+
 		@Override
 		public Object getContent()
 		{
 			return content;
 		}
 	}
-	
+
 
 	private void save()
 	{
 		final ArrayList<SetValue<?>> setValues = new ArrayList<SetValue<?>>();
-		
+
 		for(Iterator<?> i = getFields().iterator(); i.hasNext(); )
 		{
 			final Field field = (Field)i.next();
@@ -459,7 +459,7 @@ final class ItemForm extends Form
 				final DataField attribute = (DataField)field.key;
 				final Media media = Media.get(attribute);
 				final FileItem fileItem = getParameterFile(attribute.getName());
-				
+
 				if(fileItem!=null)
 				{
 					String contentType = fileItem.getContentType();
@@ -468,7 +468,7 @@ final class ItemForm extends Form
 						// fix for MSIE behaviour
 						if("image/pjpeg".equals(contentType))
 							contentType = "image/jpeg";
-						
+
 						try
 						{
 							final InputStream data = fileItem.getInputStream();
@@ -511,7 +511,7 @@ final class ItemForm extends Form
 			field.error = e.getClass().getName();
 		}
 	}
-	
+
 	@SuppressWarnings({"rawtypes", "unchecked"})
 	private static final List<com.exedio.cope.Field<?>> cast(final List<com.exedio.cope.Field> o)
 	{

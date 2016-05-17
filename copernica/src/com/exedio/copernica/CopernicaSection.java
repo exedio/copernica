@@ -25,5 +25,5 @@ import com.exedio.cope.Field;
 public interface CopernicaSection extends Component
 {
 	Collection<? extends Field<?>> getCopernicaAttributes();
-	
+
 }

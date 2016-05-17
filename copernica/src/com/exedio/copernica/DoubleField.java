@@ -22,7 +22,7 @@ package com.exedio.copernica;
 class DoubleField extends TextField
 {
 	final Double content;
-	
+
 	/**
 	 * Constructs a form field with an initial value.
 	 */
@@ -32,7 +32,7 @@ class DoubleField extends TextField
 
 		this.content = value;
 	}
-	
+
 	/**
 	 * Constructs a form field with a value obtained from the submitted form.
 	 */
@@ -57,11 +57,11 @@ class DoubleField extends TextField
 		else
 			content = null;
 	}
-	
+
 	@Override
 	public Object getContent()
 	{
 		return content;
 	}
-	
+
 }

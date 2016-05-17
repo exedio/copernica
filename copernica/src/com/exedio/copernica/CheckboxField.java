@@ -23,7 +23,7 @@ import java.io.PrintStream;
 class CheckboxField extends Field
 {
 	static final String VALUE_ON = "on";
-	
+
 	final boolean content;
 
 	/**
@@ -34,7 +34,7 @@ class CheckboxField extends Field
 		super(form, key, name, value ? VALUE_ON : null);
 		this.content = value;
 	}
-	
+
 	/**
 	 * Constructs a form field with a value obtained from the submitted form.
 	 */
@@ -50,13 +50,13 @@ class CheckboxField extends Field
 		else
 			throw new RuntimeException(name+'-'+value);
 	}
-	
+
 	@Override
 	public void writeIt(final PrintStream out)
 	{
 		Main_Jspm.write(out, this);
 	}
-	
+
 	@Override
 	public Object getContent()
 	{

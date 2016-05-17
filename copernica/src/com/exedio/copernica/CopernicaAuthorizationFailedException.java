@@ -21,10 +21,10 @@ package com.exedio.copernica;
 final class CopernicaAuthorizationFailedException extends Exception
 {
 	private static final long serialVersionUID = 1l;
-	
+
 	final String code;
 	final String param;
-	
+
 	CopernicaAuthorizationFailedException(final String code)
 	{
 		super("authorization failed ["+code+"]");
@@ -38,7 +38,7 @@ final class CopernicaAuthorizationFailedException extends Exception
 		this.code = code;
 		this.param = param;
 	}
-	
+
 	String getDisplayCode()
 	{
 		return param==null ? code : (code+"*"+param);

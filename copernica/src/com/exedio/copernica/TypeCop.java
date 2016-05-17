@@ -49,13 +49,13 @@ final class TypeCop extends CopernicaCop
 	{
 		this(provider, language, type, null, true, PAGER_CONFIG.newPager());
 	}
-	
+
 	TypeCop(final CopernicaProvider provider, final CopernicaLanguage language, final Type<?> type,
 					final Function<?> orderBy, final boolean orderAscending,
 					final Pager pager)
 	{
 		super("type", provider, language);
-		
+
 		this.type = type;
 		this.orderBy = orderBy;
 		this.orderAscending = orderAscending;
@@ -67,7 +67,7 @@ final class TypeCop extends CopernicaCop
 			addParameter(orderAscending ? ORDER_ASCENDING : ORDER_DESCENDING, cast(orderBy).getName());
 		pager.addParameters(this);
 	}
-	
+
 	@SuppressWarnings("unchecked") // workaround for bug in javac
 	private static Feature cast(final Function<?> o)
 	{
@@ -79,7 +79,7 @@ final class TypeCop extends CopernicaCop
 	{
 		return new TypeCop(provider, newLanguage, type, orderBy, orderAscending, pager);
 	}
-	
+
 	@Override
 	final boolean isType(final Type<?> type)
 	{
@@ -103,12 +103,12 @@ final class TypeCop extends CopernicaCop
 	{
 		return pager.isLast() ? null : toPage(pager.next());
 	}
-	
+
 	final CopernicaCop toPage(final Pager pager)
 	{
 		return pager!=null ? new TypeCop(provider, language, type, orderBy, orderAscending, pager) : null;
 	}
-	
+
 	final TypeCop orderBy(final Function<?> newOrderBy, final boolean ascending)
 	{
 		return new TypeCop(provider, language, type, newOrderBy, ascending, pager);
@@ -129,24 +129,24 @@ final class TypeCop extends CopernicaCop
 	{
 		super.init(request);
 		assert queryResult==null;
-		
+
 		final Query<?> query = type.newQuery(null);
 		if(orderBy!=null)
 			query.setOrderByAndThis(orderBy, orderAscending);
 		else
 			query.setOrderByThis(true);
 		query.setLimit(pager.getOffset(), pager.getLimit());
-		
+
 		final Transaction transaction = type.getModel().currentTransaction();
 		transaction.setQueryInfoEnabled(true);
 
 		queryResult = query.searchAndTotal();
-		
+
 		queryInfos = transaction.getQueryInfos();
 		transaction.setQueryInfoEnabled(false);
 		pager.init(queryResult.getData().size(), queryResult.getTotal());
 	}
-	
+
 	@Override
 	void writeBody(final PrintStream out)
 	{

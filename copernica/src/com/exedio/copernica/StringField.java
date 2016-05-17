@@ -30,7 +30,7 @@ final class StringField extends TextField
 	public StringField(final Form form, final Object key, final String name, final String value)
 	{
 		super(form, key, name, (value==null) ? "" : value);
-		
+
 		this.content = value;
 	}
 
@@ -40,11 +40,11 @@ final class StringField extends TextField
 	public StringField(final Form form, final Object key, final String name)
 	{
 		super(form, key, name);
-		
+
 		final String value = this.value;
 		content = value; // TODO: convert empty string to null
 	}
-	
+
 	@Override
 	public Object getContent()
 	{

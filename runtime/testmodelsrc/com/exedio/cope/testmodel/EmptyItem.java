@@ -39,25 +39,25 @@ public class EmptyItem extends Item
 	 * This tests, that there are no name collisions.
 	 */
 	boolean pk;
-	
+
 	/**
 	 * This is a non-persistent attribute of this item
 	 * which is modifier after the item is created.
 	 * Used for testing {@link Item#postCreate()}.
 	 */
 	private int postCreateValue;
-	
+
 	@Override
 	protected final void afterNewCopeItem()
 	{
 		postCreateValue = 5;
 	}
-	
+
 	public final int getPostCreateValue()
 	{
 		return postCreateValue;
 	}
-	
+
 	/**
 
 	 **

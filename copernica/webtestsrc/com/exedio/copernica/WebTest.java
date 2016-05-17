@@ -60,11 +60,11 @@ public class WebTest extends AbstractWebTest
 		someItem = "";
 		someNotNullItem = "EmptyItem-1";
 	}
-	
+
 	private static final String SECTION_NUMBERS = "numbers";
 	private static final String SECTION_DATA = "data";
 	private static final String SECTION_OTHER = "other";
-	
+
 	private void assertItemForm()
 	{
 		assertTrue(section, Arrays.asList(new String[]{null, SECTION_NUMBERS, SECTION_DATA, SECTION_OTHER}).contains(section));
@@ -81,7 +81,7 @@ public class WebTest extends AbstractWebTest
 
 		assertFormElementEquals("someEnum", someEnum);
 		assertFormElementEquals("someNotNullEnum", someNotNullEnum);
-	
+
 		//assertFormElementEquals("someDate", someDate); // TODO fails with wrong time zone
 		assertFormElementEquals("someBoolean", someBoolean);
 		if(section.equals(SECTION_OTHER))
@@ -112,7 +112,7 @@ public class WebTest extends AbstractWebTest
 		else
 			assertLinkNotPresentWithText(someNotNullItem);
 	}
-	
+
 	private void section(final String section)
 	{
 		this.section = section;
@@ -128,7 +128,7 @@ public class WebTest extends AbstractWebTest
 		clickLinkWithText("Attribute Item");
 		assertTitleEquals("Attribute Item");
 		assertTextPresent("Attribute Item");
-		
+
 		assertLinkPresentWithText("50");
 		clickLinkWithText("50");
 		assertTitleEquals("Attribute Item");

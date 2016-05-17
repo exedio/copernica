@@ -74,24 +74,24 @@ import com.exedio.cops.Resource;
 public final class CopernicaServlet extends CopsServlet
 {
 	private static final long serialVersionUID = 1l;
-	
+
 	private ConnectToken connectToken = null;
 	private CopernicaProvider provider = null;
 
 	static final Resource stylesheet = new Resource("copernica.css");
 	static final Resource logo = new Resource("exedio.png");
-	
+
 	@Override
 	public void init() throws ServletException
 	{
 		super.init();
-		
+
 		if(this.provider!=null)
 		{
 			System.out.println("reinvokation of jspInit");
 			return;
 		}
-		
+
 		this.provider = createProvider();
 	}
 
@@ -124,7 +124,7 @@ public final class CopernicaServlet extends CopsServlet
 			out = new PrintStream(response.getOutputStream(), false, UTF8);
 			Copernica_Jspm.write(out, user, cop);
 			out.close();
-			
+
 			model.commit();
 		}
 		catch(CopernicaAuthorizationFailedException e)
@@ -185,13 +185,13 @@ public final class CopernicaServlet extends CopsServlet
 			throw new RuntimeException(e);
 		}
 	}
-	
+
 	private final CopernicaUser checkAccess(final HttpServletRequest request)
 		throws CopernicaAuthorizationFailedException
 	{
 		if(!provider.requiresAuthorization())
 			return null;
-		
+
 		final String[] authorization = BasicAuthorization.getUserAndPassword(request);
 		if(authorization==null)
 			throw new CopernicaAuthorizationFailedException("noauth");
@@ -203,7 +203,7 @@ public final class CopernicaServlet extends CopsServlet
 		//System.out.println("user:"+user);
 		if(user==null)
 			throw new CopernicaAuthorizationFailedException("nouser", userid);
-		
+
 		if(!user.checkCopernicaPassword(password))
 			throw new CopernicaAuthorizationFailedException("badpass", userid);
 

@@ -28,7 +28,7 @@ public class TransientLanguage
 	final String offName;
 
 	final HashMap<Enum<?>, String> enumerationValueNames = new HashMap<Enum<?>, String>();
-	
+
 	public TransientLanguage(final String id, final String nullName, final String onName, final String offName)
 	{
 		super(id);
@@ -36,5 +36,5 @@ public class TransientLanguage
 		this.onName = onName;
 		this.offName = offName;
 	}
-	
+
 }

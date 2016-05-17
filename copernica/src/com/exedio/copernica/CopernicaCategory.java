@@ -25,7 +25,7 @@ import com.exedio.cope.Type;
 public interface CopernicaCategory extends Component
 {
 	public Collection<? extends CopernicaCategory> getCopernicaSubCategories();
-	
+
 	public Collection<Type<?>> getCopernicaTypes();
-	
+
 }

@@ -24,7 +24,7 @@ public class TransientComponent implements Component
 {
 	private final String id;
 	private final HashMap<TransientLanguage, String> names = new HashMap<TransientLanguage, String>();
-	
+
 	TransientComponent(final String id)
 	{
 		this.id = id;
@@ -34,12 +34,12 @@ public class TransientComponent implements Component
 	{
 		return id;
 	}
-	
+
 	public void putName(final TransientLanguage language, final String name)
 	{
 		names.put(language, name);
 	}
-	
+
 	public String getCopernicaName(final CopernicaLanguage displayLanguage)
 	{
 		{

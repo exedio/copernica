@@ -27,7 +27,7 @@ final class EmptyCop extends CopernicaCop
 	{
 		super("home", provider, language);
 	}
-	
+
 	@Override
 	final CopernicaCop switchLanguage(final CopernicaLanguage newLanguage)
 	{
@@ -39,7 +39,7 @@ final class EmptyCop extends CopernicaCop
 	{
 		return false;
 	}
-	
+
 	@Override
 	final String getTitle()
 	{

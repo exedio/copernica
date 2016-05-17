@@ -12,7 +12,7 @@ final class DayField extends TextField
 
 	final Day content;
 	final String pattern;
-	
+
 	/**
 	 * Constructs a form field with an initial value.
 	 */
@@ -20,7 +20,7 @@ final class DayField extends TextField
 	{
 		this(DATE_FORMAT_FULL, form, key, name, value);
 	}
-	
+
 	/**
 	 * Constructs a form field with an initial value.
 	 */
@@ -34,7 +34,7 @@ final class DayField extends TextField
 		if(pattern==null)
 			throw new NullPointerException("pattern");
 	}
-	
+
 	/**
 	 * Constructs a form field with a value obtained from the submitted form.
 	 */
@@ -42,7 +42,7 @@ final class DayField extends TextField
 	{
 		this(DATE_FORMAT_FULL, form, key, name);
 	}
-	
+
 	/**
 	 * Constructs a form field with a value obtained from the submitted form.
 	 */
@@ -70,11 +70,11 @@ final class DayField extends TextField
 		else
 			content = null;
 	}
-	
+
 	@Override
 	public Object getContent()
 	{
 		return content;
 	}
-	
+
 }

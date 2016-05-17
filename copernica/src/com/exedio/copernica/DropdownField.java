@@ -26,7 +26,7 @@ class DropdownField extends Field
 {
 	public final ArrayList<String> names = new ArrayList<String>();
 	final HashMap<String, String> values = new HashMap<String, String>();
-	
+
 	/**
 	 * Constructs a form field with an initial value.
 	 * @throws NullPointerException if value is null.
@@ -38,7 +38,7 @@ class DropdownField extends Field
 		if(value==null)
 			throw new NullPointerException("value for " + name);
 	}
-	
+
 	/**
 	 * Constructs a form field with a value obtained from the submitted form.
 	 * @throws NullPointerException if request does not contain a parameter for name.
@@ -50,17 +50,17 @@ class DropdownField extends Field
 		if(value==null)
 			throw new NullPointerException("value for " + name);
 	}
-	
+
 	public String getValue(final String name)
 	{
 		return values.get(name);
 	}
-	
+
 	public boolean isChecked(final String checkValue)
 	{
 		return value.equals(checkValue);
 	}
-	
+
 	/**
 	 * @throws NullPointerException if name or value is null
 	 */
@@ -70,11 +70,11 @@ class DropdownField extends Field
 			throw new NullPointerException("name");
 		if(value==null)
 			throw new NullPointerException("value");
-		
+
 		names.add(name);
 		values.put(name, value);
 	}
-	
+
 	@Override
 	public void writeIt(final PrintStream out)
 	{

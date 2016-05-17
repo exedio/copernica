@@ -30,9 +30,9 @@ import com.exedio.copernica.TransientUser;
 
 public class CopernicaTestProvider extends TransientCopernicaProvider
 {
-	
+
 	private final Model model;
-	
+
 	public CopernicaTestProvider()
 	{
 		this.model = Main.model;
@@ -50,7 +50,7 @@ public class CopernicaTestProvider extends TransientCopernicaProvider
 				en,
 			}
 		);
-		
+
 		final TransientUser admin = new TransientUser("admin", "nimda", "Sir Administrator");
 		final TransientUser user = new TransientUser("user", "resu", "Mister User");
 		setTransientUsers(
@@ -59,7 +59,7 @@ public class CopernicaTestProvider extends TransientCopernicaProvider
 				user,
 			}
 		);
-		
+
 		setSections(AttributeItem.TYPE,
 			Arrays.asList(new Field<?>[]{AttributeItem.someString, AttributeItem.someNotNullString}),
 			Arrays.asList(new TransientSection[]

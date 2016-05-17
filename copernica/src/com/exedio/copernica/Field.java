@@ -42,7 +42,7 @@ abstract class Field
 		this.value = value;
 		form.register(this);
 	}
-	
+
 	/**
 	 * Constructs a form field with a value obtained from the submitted form.
 	 */
@@ -53,46 +53,46 @@ abstract class Field
 		this.value = form.getParameter(name);
 		form.register(this);
 	}
-	
+
 	/**
 	 * The content of the <tt>style</tt> attribute of the <tt>input</tt> tag,
 	 * if you use {@link #write(PrintStream)}.
 	 */
 	public String style = null;
-	
+
 	public final String getName()
 	{
 		if(name==null)
 			throw new RuntimeException();
 		return name;
 	}
-	
+
 	public final String getValue()
 	{
 		return value;
 	}
-	
+
 	public final String getError()
 	{
 		return error;
 	}
-	
+
 	public final boolean isWritten()
 	{
 		return written;
 	}
-	
+
 	public final void write(final PrintStream out)
 	{
 		if(written)
 			throw new RuntimeException("field "+name+" has already been written");
-		
+
 		writeIt(out);
 		written = true;
 	}
 
 	public abstract void writeIt(final PrintStream out);
-	
+
 	public Object getContent()
 	{
 		return value;

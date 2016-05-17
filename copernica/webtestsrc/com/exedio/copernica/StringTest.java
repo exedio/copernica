@@ -31,7 +31,7 @@ public class StringTest extends AbstractWebTest
 	String min4;
 	String max4;
 	String min4Max8;
-	
+
 	private static final String ANY = "Any";
 	private static final String MIN4 = "Min4";
 	private static final String MAX4 = "Max4";
@@ -46,7 +46,7 @@ public class StringTest extends AbstractWebTest
 		max4="max4";
 		min4Max8="min4max8";
 	}
-	
+
 	private void assertItemForm()
 	{
 		assertFormElementEqualsWithLabel(ANY, any);
@@ -63,7 +63,7 @@ public class StringTest extends AbstractWebTest
 		clickLinkWithText("String Item");
 		assertTitleEquals("String Item");
 		assertTextPresent("String Item");
-		
+
 		clickLinkWithText("StringItem-0");
 		assertTitleEquals("StringItem-0");
 		assertItemForm();

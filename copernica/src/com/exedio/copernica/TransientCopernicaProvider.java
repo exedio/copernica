@@ -46,18 +46,18 @@ public abstract class TransientCopernicaProvider implements CopernicaProvider
 		model.reviseIfSupported();
 		return result;
 	}
-	
+
 	// Transient Languages
-	
+
 	private HashMap<String, TransientLanguage> transientLanguages = null;
-	
+
 	protected final void setTransientLanguages(final TransientLanguage[] languages)
 	{
 		final HashMap<String, TransientLanguage> result = new HashMap<String, TransientLanguage>(languages.length);
-		
+
 		for(int i = 0; i<languages.length; i++)
 			result.put(languages[i].getCopernicaID(), languages[i]);
-			
+
 		transientLanguages = result;
 	}
 
@@ -68,7 +68,7 @@ public abstract class TransientCopernicaProvider implements CopernicaProvider
 				? Collections.<TransientLanguage>emptyList()
 				: transientLanguages.values();
 	}
-	
+
 	public CopernicaLanguage findLanguageByID(final String copernicaID)
 	{
 		return
@@ -76,18 +76,18 @@ public abstract class TransientCopernicaProvider implements CopernicaProvider
 				? null
 				: transientLanguages.get(copernicaID);
 	}
-	
+
 	// Transient Users
-	
+
 	private HashMap<String, TransientUser> transientUsers = null;
-	
+
 	protected final void setTransientUsers(final TransientUser[] users)
 	{
 		final HashMap<String, TransientUser> result = new HashMap<String, TransientUser>(users.length);
-		
+
 		for(int i = 0; i<users.length; i++)
 			result.put(users[i].id, users[i]);
-			
+
 		transientUsers = result;
 	}
 
@@ -98,17 +98,17 @@ public abstract class TransientCopernicaProvider implements CopernicaProvider
 				? null
 				: transientUsers.get(copernicaID);
 	}
-	
+
 	public Collection<CopernicaCategory> getRootCategories()
 	{
 		return Collections.<CopernicaCategory>emptyList();
 	}
-	
+
 	// Transient Sections
-	
+
 	private HashMap<Type<?>, Collection<? extends Field<?>>> transientMainAttributes = null;
 	private HashMap<Type<?>, Collection<? extends CopernicaSection>> transientSections = null;
-	
+
 	protected final void setSections(final Type<?> type, final Collection<? extends Field<?>> mainAttributes, final Collection<? extends CopernicaSection> sections)
 	{
 		if(transientMainAttributes==null)
@@ -120,17 +120,17 @@ public abstract class TransientCopernicaProvider implements CopernicaProvider
 		transientMainAttributes.put(type, mainAttributes);
 		transientSections.put(type, sections);
 	}
-	
+
 	public Collection<? extends Field<?>> getMainAttributes(final Type<?> type)
 	{
 		return transientMainAttributes==null ? null : transientMainAttributes.get(type);
 	}
-	
+
 	public Collection<? extends CopernicaSection> getSections(final Type<?> type)
 	{
 		return transientSections==null ? null : transientSections.get(type);
 	}
-	
+
 	public static final String breakupName(final String name)
 	{
 		final StringBuilder result = new StringBuilder(name.length());
@@ -155,7 +155,7 @@ public abstract class TransientCopernicaProvider implements CopernicaProvider
 		}
 		return result.toString();
 	}
-	
+
 	public String getDisplayNameNull(CopernicaLanguage displayLanguage)
 	{
 		return
@@ -171,7 +171,7 @@ public abstract class TransientCopernicaProvider implements CopernicaProvider
 			? ((TransientLanguage)displayLanguage).onName
 			: "X";
 	}
-	
+
 	public String getDisplayNameOff(CopernicaLanguage displayLanguage)
 	{
 		return
@@ -190,7 +190,7 @@ public abstract class TransientCopernicaProvider implements CopernicaProvider
 		String name = feature.getName();
 		return breakupName(name);
 	}
-	
+
 	public String getDisplayName(final RequestCache cache, final CopernicaLanguage displayLanguage, final Item item)
 	{
 		final Type<?> type = item.getCopeType();
@@ -224,12 +224,12 @@ public abstract class TransientCopernicaProvider implements CopernicaProvider
 			return result.toString();
 		}
 	}
-	
+
 	protected final void putDisplayName(final TransientLanguage transientLanguage, final Enum<?> value, final String name)
 	{
 		transientLanguage.enumerationValueNames.put(value, name);
 	}
-	
+
 	public String getDisplayName(final CopernicaLanguage displayLanguage, final Enum<?> value)
 	{
 		if(displayLanguage instanceof TransientLanguage)
@@ -252,12 +252,12 @@ public abstract class TransientCopernicaProvider implements CopernicaProvider
 	{
 		return null;
 	}
-	
+
 	public CopernicaSection findSectionByID(final String copernicaID)
 	{
 		return null;
 	}
-	
+
 	public void handleException(
 			final PrintStream out, final CopernicaServlet servlet,
 			final HttpServletRequest request, final Exception e)

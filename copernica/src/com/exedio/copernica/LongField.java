@@ -22,7 +22,7 @@ package com.exedio.copernica;
 class LongField extends TextField
 {
 	final Long content;
-	
+
 	/**
 	 * Constructs a form field with an initial value.
 	 */
@@ -31,7 +31,7 @@ class LongField extends TextField
 		super(form, key, name, (value==null) ? "" : String.valueOf(value));
 		content = value;
 	}
-	
+
 	/**
 	 * Constructs a form field with a value obtained from the submitted form.
 	 */
@@ -56,11 +56,11 @@ class LongField extends TextField
 		else
 			content = null;
 	}
-	
+
 	@Override
 	public Object getContent()
 	{
 		return content;
 	}
-	
+
 }

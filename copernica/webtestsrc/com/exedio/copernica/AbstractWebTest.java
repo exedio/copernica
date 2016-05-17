@@ -45,7 +45,7 @@ public class AbstractWebTest extends WebTestCase
 		beginAt("init.jsp");
 		submit("INIT");
 	}
-	
+
 	@Override
 	public void tearDown() throws Exception
 	{
@@ -53,14 +53,14 @@ public class AbstractWebTest extends WebTestCase
 		submit("schema.drop");
 		super.tearDown();
 	}
-	
+
 	protected final void assertFormElementEqualsWithLabel(final String formElementLabel, final String expectedValue)
 	{
 		final String formElementName = getDialog().getFormElementNameForLabel(formElementLabel);
 		assertNotNull("no form element with label "+formElementLabel, formElementName);
 		assertFormElementEquals(formElementName, expectedValue);
 	}
-	
+
 	protected final void submitWithValue(final String buttonValue) throws SAXException
 	{
 		final Button buttonWithValue = null;
@@ -82,10 +82,10 @@ public class AbstractWebTest extends WebTestCase
 		}
 		fail("there is no button with value "+buttonValue);
 	}
-	
-	
+
+
 	// ----------------------------------- adapted from CopeAssert
-	
+
 	private static final String DATE_FORMAT_FULL = "dd.MM.yyyy HH:mm:ss.SSS";
 
 	public final static void assertWithinHttpDate(final Date expectedBefore, final Date expectedAfter, final Date actual)

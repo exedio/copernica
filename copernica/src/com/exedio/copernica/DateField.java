@@ -29,7 +29,7 @@ class DateField extends TextField
 
 	final Date content;
 	final String pattern;
-	
+
 	/**
 	 * Constructs a form field with an initial value.
 	 */
@@ -37,7 +37,7 @@ class DateField extends TextField
 	{
 		this(DATE_FORMAT_FULL, form, key, name, value);
 	}
-	
+
 	/**
 	 * Constructs a form field with an initial value.
 	 */
@@ -51,7 +51,7 @@ class DateField extends TextField
 		if(pattern==null)
 			throw new NullPointerException("pattern");
 	}
-	
+
 	/**
 	 * Constructs a form field with a value obtained from the submitted form.
 	 */
@@ -59,7 +59,7 @@ class DateField extends TextField
 	{
 		this(DATE_FORMAT_FULL, form, key, name);
 	}
-	
+
 	/**
 	 * Constructs a form field with a value obtained from the submitted form.
 	 */
@@ -87,11 +87,11 @@ class DateField extends TextField
 		else
 			content = null;
 	}
-	
+
 	@Override
 	public Object getContent()
 	{
 		return content;
 	}
-	
+
 }

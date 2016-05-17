@@ -22,14 +22,14 @@ package com.exedio.copernica;
 class IntegerField extends TextField
 {
 	final Integer content;
-	
+
 	/**
 	 * Constructs a form field with an initial value.
 	 */
 	public IntegerField(final Form form, final Object key, final String name, final Integer value)
 	{
 		super(form, key, name, (value==null) ? "" : String.valueOf(value));
-		
+
 		this.content = value;
 	}
 
@@ -63,5 +63,5 @@ class IntegerField extends TextField
 	{
 		return content;
 	}
-	
+
 }

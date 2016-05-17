@@ -32,7 +32,7 @@ public class ItemWithSingleUnique extends Item
 	public static final StringField uniqueString = new StringField().optional().unique();
 
 	public static final StringField otherString = new StringField().optional();
-	
+
 	public ItemWithSingleUnique(final String uniqueString)
 	{
 		this(new com.exedio.cope.SetValue[]{
@@ -47,7 +47,7 @@ public class ItemWithSingleUnique extends Item
 			ItemWithSingleUnique.otherString.map(otherString)
 		});
 	}
-	
+
 /**
 
 	 **

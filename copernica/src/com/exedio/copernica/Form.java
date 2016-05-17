@@ -40,9 +40,9 @@ class Form
 	private final HashMap<String, Field> fieldByName = new HashMap<String, Field>();
 	private final HashMap<Object, Field> fieldByKey = new HashMap<Object, Field>();
 	private final ArrayList<Field> fieldList = new ArrayList<Field>();
-	
+
 	final ArrayList<Section> sectionList = new ArrayList<Section>();
-	
+
 	@SuppressWarnings("deprecation") // TODO use new way of fileupload
 	public Form(final HttpServletRequest request)
 	{
@@ -84,7 +84,7 @@ class Form
 			multipartContentParameters = null;
 		}
 	}
-	
+
 	final void register(final Field field)
 	{
 		if(fieldByName.put(field.name, field)!=null)
@@ -93,7 +93,7 @@ class Form
 			throw new RuntimeException(field.name);
 		fieldList.add(field);
 	}
-	
+
 	protected final String getParameter(final String name)
 	{
 		if(multipartContentParameters!=null)
@@ -103,7 +103,7 @@ class Form
 		else
 			return request.getParameter(name);
 	}
-	
+
 	protected final FileItem getParameterFile(final String name)
 	{
 		if(multipartContentParameters!=null)
@@ -113,32 +113,32 @@ class Form
 		else
 			return null;
 	}
-	
+
 	public final Field getFieldByName(final String name)
 	{
 		return fieldByName.get(name);
 	}
-	
+
 	public final Field getFieldByKey(final Object key)
 	{
 		return fieldByKey.get(key);
 	}
-	
+
 	public final List<Field> getFields()
 	{
 		return Collections.unmodifiableList(fieldList);
 	}
-	
+
 	public final void writeHiddenFields(final PrintStream out)
 	{
 		Main_Jspm.writeHiddenFields(out, this);
 	}
-	
+
 	public final class Section
 	{
 		public final String id;
 		public final String name;
-		
+
 		public Section(final String id, final String name)
 		{
 			this.id = id;
@@ -146,7 +146,7 @@ class Form
 			sectionList.add(this);
 		}
 	}
-	
+
 	public final List<Section> getSections()
 	{
 		return Collections.unmodifiableList(sectionList);

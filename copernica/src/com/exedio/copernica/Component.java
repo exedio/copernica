@@ -26,7 +26,7 @@ public interface Component
 	 * building urls and form values.
 	 */
 	String getCopernicaID();
-	
+
 	/**
 	 * Returns the name of this component to be displayed to the user.
 	 */

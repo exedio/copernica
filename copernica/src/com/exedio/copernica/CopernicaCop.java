@@ -45,7 +45,7 @@ abstract class CopernicaCop extends Cop implements RequestCache
 		if(language!=null)
 			addParameter(LANGUAGE, language.getCopernicaID());
 	}
-	
+
 	/**
 	 * @param request used in subclasses
 	 */
@@ -53,7 +53,7 @@ abstract class CopernicaCop extends Cop implements RequestCache
 	{
 		// empty default implementation
 	}
-	
+
 	abstract CopernicaCop switchLanguage(CopernicaLanguage newLanguage);
 	abstract boolean isType(final Type<?> type);
 	abstract String getTitle();
@@ -62,33 +62,33 @@ abstract class CopernicaCop extends Cop implements RequestCache
 	{
 		return new EmptyCop(provider, language);
 	}
-	
+
 	CopernicaCop toPrev()
 	{
 		return null;
 	}
-	
+
 	CopernicaCop toNext()
 	{
 		return null;
 	}
-	
+
 	final TypeCop toType(final Type<?> newType)
 	{
 		return new TypeCop(provider, language, newType);
 	}
-	
+
 	final ItemCop toItem(final Item newItem)
 	{
 		return new ItemCop(provider, language, newItem);
 	}
-	
+
 	static final CopernicaCop getCop(final CopernicaProvider provider, final HttpServletRequest request)
 	{
 		final String typeID = request.getParameter(TYPE);
 		final String itemID = request.getParameter(ITEM);
 		final String langID = request.getParameter(LANGUAGE);
-		
+
 		final CopernicaLanguage language = (langID!=null) ? provider.findLanguageByID(langID) : null;
 		if(typeID!=null)
 		{
@@ -101,7 +101,7 @@ abstract class CopernicaCop extends Cop implements RequestCache
 		else
 			return new EmptyCop(provider, language);
 	}
-	
+
 	private String nullName = null;
 	//private int nullNameMisses = 0;
 	public String getDisplayNameNull()
@@ -111,7 +111,7 @@ abstract class CopernicaCop extends Cop implements RequestCache
 			//nullNameMisses++;
 			nullName = provider.getDisplayNameNull(language);
 		}
-		
+
 		return nullName;
 	}
 
@@ -124,10 +124,10 @@ abstract class CopernicaCop extends Cop implements RequestCache
 			//onNameMisses++;
 			onName = provider.getDisplayNameOn(language);
 		}
-		
+
 		return onName;
 	}
-	
+
 	private String offName = null;
 	//private int offNameMisses = 0;
 	public String getDisplayNameOff()
@@ -137,14 +137,14 @@ abstract class CopernicaCop extends Cop implements RequestCache
 			//offNameMisses++;
 			offName = provider.getDisplayNameOff(language);
 		}
-		
+
 		return offName;
 	}
 
 	private HashMap<Item, String> itemDisplayNames = null;
 	//private int itemDisplayNamesHits = 0;
 	//private int itemDisplayNamesMisses = 0;
-	
+
 	public String getDisplayName(final CopernicaLanguage displayLanguage, final Item item)
 	{
 		if((language==null&&displayLanguage==null) || (language!=null&&language.equals(displayLanguage)))
@@ -174,11 +174,11 @@ abstract class CopernicaCop extends Cop implements RequestCache
 			return provider.getDisplayName(this, displayLanguage, item);
 		}
 	}
-	
+
 	private HashMap<Enum<?>, String> enumDisplayNames = null;
 	//private int enumDisplayNamesHits = 0;
 	//private int enumDisplayNamesMisses = 0;
-	
+
 	public String getDisplayName(final Enum<?> enumerationValue)
 	{
 		if(enumDisplayNames==null)
@@ -200,14 +200,14 @@ abstract class CopernicaCop extends Cop implements RequestCache
 		enumDisplayNames.put(enumerationValue, result);
 		return result;
 	}
-	
+
 	void log()
 	{
 		//System.out.println("itemDisplayNames: ("+itemDisplayNamesMisses+"/"+itemDisplayNamesHits+")");
 		//System.out.println("enumDisplayNames: ("+enumDisplayNamesMisses+"/"+enumDisplayNamesHits+")");
 		//System.out.println("nullNameMisses: "+nullNameMisses+", onNameMisses: "+onNameMisses+", offNameMisses: "+offNameMisses);
 	}
-	
+
 	abstract void writeBody(PrintStream out);
-	
+
 }

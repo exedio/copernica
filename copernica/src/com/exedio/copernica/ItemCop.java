@@ -29,14 +29,14 @@ import com.exedio.cope.Type;
 final class ItemCop extends CopernicaCop
 {
 	final Item item;
-	
+
 	ItemCop(final CopernicaProvider provider, final CopernicaLanguage language, final Item item)
 	{
 		super("item", provider, language);
 		this.item = item;
 		addParameter(ITEM, item.getCopeID());
 	}
-	
+
 	ItemForm form;
 
 	@Override
@@ -45,7 +45,7 @@ final class ItemCop extends CopernicaCop
 		super.init(request);
 		this.form = new ItemForm(this, request);
 	}
-	
+
 	@Override
 	final CopernicaCop switchLanguage(final CopernicaLanguage newLanguage)
 	{
@@ -63,7 +63,7 @@ final class ItemCop extends CopernicaCop
 	{
 		if(form!=null && form.deletedName!=null)
 			return form.deletedName;
-		
+
 		return provider.getDisplayName(this, language, item);
 	}
 

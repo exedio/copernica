@@ -22,9 +22,9 @@ import com.exedio.cope.Type;
 
 final class PureCopernicaProvider extends TransientCopernicaProvider
 {
-	
+
 	private final Model model;
-	
+
 	PureCopernicaProvider(final Model model)
 	{
 		this.model = model;
@@ -46,7 +46,7 @@ final class PureCopernicaProvider extends TransientCopernicaProvider
 	{
 		return false;
 	}
-	
+
 	@Override
 	public int getLimitCeiling(final Type<?> type)
 	{

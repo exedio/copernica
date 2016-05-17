@@ -41,25 +41,25 @@ public interface CopernicaProvider
 	 * Is called once after the constructor.
 	 */
 	ConnectToken connect(ServletConfig config, String name);
-	
+
 	Collection<? extends CopernicaLanguage> getDisplayLanguages();
-	
+
 	Collection<? extends CopernicaCategory> getRootCategories();
-	
+
 	Collection<? extends Field<?>> getMainAttributes(Type<?> type);
 
 	Collection<? extends CopernicaSection> getSections(Type<?> type);
-	
+
 	String getDisplayNameNull(CopernicaLanguage displayLanguage);
 
 	String getDisplayNameOn(CopernicaLanguage displayLanguage);
-	
+
 	String getDisplayNameOff(CopernicaLanguage displayLanguage);
 
 	String getDisplayName(CopernicaLanguage displayLanguage, Type<?> type);
 
 	String getDisplayName(CopernicaLanguage displayLanguage, Feature feature);
-	
+
 	String getDisplayName(RequestCache cache, CopernicaLanguage displayLanguage, Item item);
 
 	String getDisplayName(CopernicaLanguage displayLanguage, Enum<?> value);
@@ -67,18 +67,18 @@ public interface CopernicaProvider
 	String getIconURL(Type<?> type);
 
 	CopernicaLanguage findLanguageByID(String copernicaID);
-	
+
 	boolean requiresAuthorization();
-	
+
 	CopernicaUser findUserByID(String copernicaID);
 
 	CopernicaCategory findCategoryByID(String copernicaID);
-	
+
 	CopernicaSection findSectionByID(String copernicaID);
 
 	void handleException(PrintStream out, CopernicaServlet servlet, HttpServletRequest request, Exception e)
 		throws IOException;
-	
+
 	int getLimitCeiling(Type<?> type);
-	
+
 }

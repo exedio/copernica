@@ -22,7 +22,7 @@ import java.io.PrintStream;
 
 abstract class TextField extends Field
 {
-	
+
 	/**
 	 * Constructs a form field with an initial value.
 	 * @throws NullPointerException if value is null.
@@ -34,7 +34,7 @@ abstract class TextField extends Field
 		if(value==null)
 			throw new NullPointerException("value for " + name);
 	}
-	
+
 	/**
 	 * Constructs a form field with a value obtained from the submitted form.
 	 * @throws NullPointerException if request does not contain a parameter for name.
@@ -46,7 +46,7 @@ abstract class TextField extends Field
 		if(value==null)
 			throw new NullPointerException("value for " + name);
 	}
-	
+
 	/**
 	 * Let the content of the <tt>type</tt> attribute of the <tt>input</tt> tag
 	 * contain <tt>password</tt> instead of <tt>text</tt>,
@@ -59,7 +59,7 @@ abstract class TextField extends Field
 	 * if you use {@link #write(PrintStream)}.
 	 */
 	public int size = 30;
-	
+
 	@Override
 	public void writeIt(final PrintStream out)
 	{

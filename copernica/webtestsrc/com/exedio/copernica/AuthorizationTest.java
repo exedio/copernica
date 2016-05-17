@@ -37,7 +37,7 @@ public class AuthorizationTest extends WebTestCase
 		beginAt("console/schema.html");
 		submit("schema.create");
 	}
-	
+
 	@Override
 	public void tearDown() throws Exception
 	{
@@ -45,7 +45,7 @@ public class AuthorizationTest extends WebTestCase
 		submit("schema.drop");
 		super.tearDown();
 	}
-	
+
 	public void testNoUser() throws Exception
 	{
 		assertAuthorizationFails(null, null);
