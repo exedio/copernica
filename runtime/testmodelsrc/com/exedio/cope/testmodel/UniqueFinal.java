@@ -25,7 +25,7 @@ import com.exedio.cope.StringField;
  * An item having a unique final attribute.
  * @author Ralf Wiebicke
  */
-public class UniqueFinal extends Item
+public final class UniqueFinal extends Item
 {
 	/**
 	 * An attribute that is unique and final.

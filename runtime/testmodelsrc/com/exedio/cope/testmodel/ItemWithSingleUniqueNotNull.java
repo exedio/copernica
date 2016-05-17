@@ -25,7 +25,7 @@ import com.exedio.cope.StringField;
  * An item having a unique mandatory attribute.
  * @author Ralf Wiebicke
  */
-public class ItemWithSingleUniqueNotNull extends Item
+public final class ItemWithSingleUniqueNotNull extends Item
 {
 	/**
 	 * An attribute that is unique and mandatory.

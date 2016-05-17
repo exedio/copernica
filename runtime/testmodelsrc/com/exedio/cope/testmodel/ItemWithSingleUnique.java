@@ -23,7 +23,7 @@ import com.exedio.cope.Item;
 import com.exedio.cope.StringField;
 
 @CopeSchemaName("UNIQUE_ITEMS")
-public class ItemWithSingleUnique extends Item
+public final class ItemWithSingleUnique extends Item
 {
 	/**
 	 * An attribute that is unique.

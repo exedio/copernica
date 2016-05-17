@@ -27,7 +27,7 @@ import com.exedio.cope.UniqueConstraint;
  * An item having two attributes and a unique constraint over these attributes.
  * @author Ralf Wiebicke
  */
-public class ItemWithDoubleUnique extends Item
+public final class ItemWithDoubleUnique extends Item
 {
 	public static final StringField string = new StringField();
 

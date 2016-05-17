@@ -25,7 +25,7 @@ import com.exedio.cope.StringField;
 /**
  * @author Ralf Wiebicke
  */
-public class PointerItem extends Item
+public final class PointerItem extends Item
 {
 
 	public static final StringField code = new StringField();

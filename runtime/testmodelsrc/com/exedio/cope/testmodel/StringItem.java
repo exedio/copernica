@@ -36,7 +36,7 @@ import com.exedio.cope.util.CharSet;
  * @author Ralf Wiebicke
  */
 @CopeSchemaName("STRINGITEMS")
-public class StringItem extends Item
+public final class StringItem extends Item
 {
 	public static final StringField any = new StringField().optional();
 
