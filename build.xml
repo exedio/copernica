@@ -199,12 +199,6 @@
 		</copy>
 	</target>
 
-	<!-- dsmf -->
-
-	<target name="dsmf.clean">
-		<delete dir="build/dsmf" />
-	</target>
-
 	<!-- runtime -->
 
 	<target name="runtime.testmodel.instrument" unless="skip.instrument">
@@ -442,7 +436,7 @@
 		</foreachEnvironment>
 	</target>
 
-	<target name="clean" depends="dsmf.clean, runtime.clean, instrument.clean, console.clean, copernica.clean">
+	<target name="clean" depends="runtime.clean, instrument.clean, console.clean, copernica.clean">
 		<delete dir="build" />
 		<delete dir="tomcat" />
 	</target>
@@ -500,7 +494,6 @@
 			<group title="Cope Runtime Library" packages="com.exedio.cope:com.exedio.cope.*" />
 			<group title="Copernica - Generic Backoffice" packages="com.exedio.copernica*" />
 			<group title="Cope Instrumentor" packages="com.exedio.cope.instrument" />
-			<group title="Database Schema Management Facility" packages="com.exedio.dsmf" />
 		</javadoc>
 	</target>
 
