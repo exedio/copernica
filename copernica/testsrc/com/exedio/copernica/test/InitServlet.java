@@ -18,6 +18,8 @@
 
 package com.exedio.copernica.test;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+
 import java.io.IOException;
 import java.io.PrintStream;
 import java.util.Date;
@@ -77,7 +79,7 @@ public class InitServlet extends CopsServlet
 			}
 		}
 
-		final PrintStream out = new PrintStream(response.getOutputStream(), false, UTF8);
+		final PrintStream out = new PrintStream(response.getOutputStream(), false, UTF_8.name());
 
 		final Transaction tx1;
 		if(transaction)
