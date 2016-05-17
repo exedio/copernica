@@ -330,6 +330,7 @@
 					<fileset file="lib/exedio-cope.jar" />
 					<fileset file="lib/exedio-cope-console.jar" />
 					<fileset file="lib/exedio-cope-util.jar" />
+					<fileset file="lib/exedio-cope-servletutil.jar" />
 					<fileset file="lib/@{env.driver}" />
 					<fileset file="lib/log4j-bundle.jar" />
 				</copy>

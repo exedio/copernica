@@ -16,6 +16,7 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="lib/exedio-cops.jar" sourcepath="lib/exedio-cops-src.zip"/>
 	<classpathentry kind="lib" path="lib/exedio-cope-util.jar" sourcepath="lib/exedio-cope-util-src.zip"/>
+	<classpathentry kind="lib" path="lib/exedio-cope-servletutil.jar" sourcepath="lib/exedio-cope-servletutil-src.zip"/>
 	<classpathentry kind="lib" path="lib/exedio-cope.jar" sourcepath="lib/exedio-cope-src.zip"/>
 	<classpathentry kind="output" path=".eclipse-output"/>
 </classpath>
