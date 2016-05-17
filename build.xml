@@ -5,6 +5,12 @@
 	<property file="local.properties" />
 	<property file="project.properties" />
 
+	<import>
+		<fileset dir="macros">
+			<include name="*.xml" />
+		</fileset>
+	</import>
+
 	<taskdef name="LoadFile" classname="org.apache.tools.ant.taskdefs.LoadFile" />
 
 	<taskdef
@@ -344,12 +350,14 @@
 	</target>
 
 	<target name="copernica.tomcat" depends="copernica.web, catalina">
+		<echoSubProperties prefix="tomcat.cope" destfile="build/tomcat.cope.properties" />
 		<foreachEnvironment skipSwitch="copernica.tomcat">
 			<body>
 				<copy tofile="tomcat/conf/Catalina/localhost/copetest-@{env}.xml"
 						file="copernica/context.xml">
 					<filterset>
 						<filter token="ENV" value="@{env}" />
+						<filter token="PROPERTIES" value="${basedir}/build/tomcat.cope.properties" />
 					</filterset>
 				</copy>
 			</body>

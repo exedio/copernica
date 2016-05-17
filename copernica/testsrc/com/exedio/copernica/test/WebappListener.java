@@ -28,6 +28,10 @@ import static com.exedio.cope.misc.ConnectToken.setProperties;
 import com.exedio.cope.ConnectProperties;
 import com.exedio.cope.misc.ServletUtil;
 import com.exedio.cope.testmodel.Main;
+import com.exedio.cope.util.Properties;
+import com.exedio.cope.util.Properties.Source;
+import java.util.ArrayList;
+import java.util.Collection;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -42,7 +46,35 @@ public final class WebappListener implements ServletContextListener
 	{
 		final ServletContext ctx = sce.getServletContext();
 
-		setProperties(Main.model, new ConnectProperties(ServletUtil.getPropertyContext(ctx), null));
+		setProperties(Main.model, new ConnectProperties(without(ServletUtil.getPropertyContext(ctx), "contextPath"), null));
+	}
+
+	/**
+	 * Needed because
+	 * {@link ConnectProperties#ConnectProperties(Source, Source)
+	 * calls {@link Properties#ensureEquality(Properties)}.
+	 */
+	private static Source without(final Source s, final String key)
+	{
+		return new Source()
+		{
+			public String get(String currentKey)
+			{
+				return key.equals(currentKey) ? null : s.get(currentKey);
+			}
+
+			public Collection<String> keySet()
+			{
+				final ArrayList<String> result = new ArrayList<String>(s.keySet());
+				result.remove(key);
+				return result;
+			}
+
+			public String getDescription()
+			{
+				return s.getDescription() + " without " + key;
+			}
+		};
 	}
 
 	public void contextDestroyed(final ServletContextEvent sce)

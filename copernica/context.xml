@@ -4,4 +4,8 @@
 		docBase="../../build/copernica/web-@ENV@"
 		debug="0"
 		privileged="true">
+	<Parameter
+			name="copetest-@ENV@.com.exedio.cope.servletutil.ServletSource.propertiesFile"
+			value="@PROPERTIES@"
+	/>
 </Context>
