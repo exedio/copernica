@@ -305,6 +305,7 @@
 				<pathelement location="build/runtime/classes" />
 				<pathelement location="build/runtime/testmodelclasses" />
 				<pathelement location="build/copernica/classes" />
+				<pathelement location="lib/exedio-cope-servletutil.jar" />
 				<pathelement location="lib/exedio-cope.jar" />
 				<pathelement location="lib/exedio-cops.jar" />
 				<pathelement location="lib/junit.jar" />

@@ -161,7 +161,7 @@ public final class CopernicaServlet extends CopsServlet
 			{
 				connectToken = ServletUtil.getConnectedModel(this);
 				final Model model = connectToken.getModel();
-				model.reviseIfSupported();
+				model.reviseIfSupportedAndAutoEnabled();
 				return new PureCopernicaProvider(model);
 			}
 			else

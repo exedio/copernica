@@ -26,7 +26,7 @@ import static com.exedio.cope.misc.ConnectToken.removeProperties;
 import static com.exedio.cope.misc.ConnectToken.setProperties;
 
 import com.exedio.cope.ConnectProperties;
-import com.exedio.cope.misc.ServletUtil;
+import com.exedio.cope.servletutil.ServletSource;
 import com.exedio.cope.testmodel.Main;
 import com.exedio.cope.util.Properties;
 import com.exedio.cope.util.Properties.Source;
@@ -46,7 +46,7 @@ public final class WebappListener implements ServletContextListener
 	{
 		final ServletContext ctx = sce.getServletContext();
 
-		setProperties(Main.model, new ConnectProperties(without(ServletUtil.getPropertyContext(ctx), "contextPath"), null));
+		setProperties(Main.model, new ConnectProperties(without(ServletSource.create(ctx), "contextPath"), null));
 	}
 
 	/**
