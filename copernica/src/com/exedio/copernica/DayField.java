@@ -3,12 +3,15 @@ package com.exedio.copernica;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.TimeZone;
 
 import com.exedio.cope.util.Day;
+import com.exedio.cope.util.TimeZoneStrict;
 
 final class DayField extends TextField
 {
 	private static final String DATE_FORMAT_FULL = "dd.MM.yyyy";
+	private static final TimeZone ZONE = TimeZoneStrict.getTimeZone("Europe/Berlin");
 
 	final Day content;
 	final String pattern;
@@ -26,7 +29,7 @@ final class DayField extends TextField
 	 */
 	public DayField(final String pattern, final Form form, final Object key, final String name, final Day value)
 	{
-		super(form, key, name, (value==null) ? "" : (new SimpleDateFormat(pattern)).format(new Date(value.getTimeInMillisFrom())));
+		super(form, key, name, (value==null) ? "" : (new SimpleDateFormat(pattern)).format(new Date(value.getTimeInMillisFrom(ZONE))));
 
 		this.pattern = pattern;
 		this.content = value;
@@ -59,7 +62,7 @@ final class DayField extends TextField
 			try
 			{
 				final SimpleDateFormat df = new SimpleDateFormat(pattern);
-				parsed = new Day(df.parse(value));
+				parsed = new Day(df.parse(value), ZONE);
 			}
 			catch(ParseException e)
 			{
