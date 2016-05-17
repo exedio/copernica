@@ -84,43 +84,6 @@
 		</sequential>
 	</macrodef>
 
-	<macrodef name="foreachEnvironment">
-		<attribute name="skipSwitch" />
-		<element name="body" optional="false" />
-		<sequential>
-			<for param="env.file">
-				<path>
-					<fileset dir="${basedir}" includes="*.test.cope.properties" />
-				</path>
-				<sequential>
-					<basename file="@{env.file}" property="@{env.file}.env" suffix=".test.cope.properties" />
-					<!-- this is a dummy loop to create the attribute @{env} -->
-					<for param="env" list="${@{env.file}.env}">
-						<sequential>
-							<property file="@{env.file}" prefix="@{env.file}." />
-							<!--echo message="Doing @{skipSwitch} for @{env} skip switch:${@{env.file}.x-build.skip.@{skipSwitch}}." /-->
-							<if>
-								<istrue value="${@{env.file}.x-build.skip.@{skipSwitch}}"/>
-								<then>
-									<echo level="warning" message="Skipped @{skipSwitch} for @{env}." />
-								</then>
-								<else>
-									<echo level="info" message="Doing @{skipSwitch} for @{env}" />
-									<!-- this is a dummy loop to create the attribute @{env.driver} -->
-									<for param="env.driver" list="${@{env.file}.x-build.driver}">
-										<sequential>
-											<body />
-										</sequential>
-									</for>
-								</else>
-							</if>
-						</sequential>
-					</for>
-				</sequential>
-			</for>
-		</sequential>
-	</macrodef>
-
 	<macrodef name="runInTomcat">
 		<attribute name="name" />
 		<element name="body" optional="false" />
@@ -315,17 +278,15 @@
 	</target>
 
 	<target name="copernica.web" depends="copernica.compile, copernica.test.compile">
-		<foreachEnvironment skipSwitch="copernica.web">
-			<body>
-				<mkdir dir="build/copernica/web-@{env}" />
+				<mkdir dir="build/copernica/web-hsqldb" />
 
-				<copy todir="build/copernica/web-@{env}/WEB-INF/classes">
+				<copy todir="build/copernica/web-hsqldb/WEB-INF/classes">
 					<fileset dir="build/runtime/testmodelclasses" />
 					<fileset dir="build/copernica/classes" />
 					<fileset dir="build/copernica/testclasses" />
 				</copy>
 
-				<copy todir="build/copernica/web-@{env}/WEB-INF/lib">
+				<copy todir="build/copernica/web-hsqldb/WEB-INF/lib">
 					<fileset file="lib/trove4j.jar" />
 					<fileset file="lib/commons-fileupload.jar" />
 					<fileset file="lib/commons-io.jar" />
@@ -334,31 +295,24 @@
 					<fileset file="lib/exedio-cope-console.jar" />
 					<fileset file="lib/exedio-cope-util.jar" />
 					<fileset file="lib/exedio-cope-servletutil.jar" />
-					<fileset file="lib/@{env.driver}" />
+					<fileset file="lib/hsqldb.jar" />
 					<fileset file="lib/slf4j-api.jar" />
 				</copy>
 
-				<copy tofile="build/copernica/web-@{env}/WEB-INF/cope.properties" file="@{env.file}" />
-				<copy todir="build/copernica/web-@{env}/WEB-INF/"
+				<copy todir="build/copernica/web-hsqldb/WEB-INF/"
 						file="copernica/web.xml" />
-				<touch file="build/copernica/web-@{env}/WEB-INF/web.xml" />
-			</body>
-		</foreachEnvironment>
+				<touch file="build/copernica/web-hsqldb/WEB-INF/web.xml" />
 	</target>
 
 	<target name="copernica.tomcat" depends="copernica.web, catalina">
 		<echoSubProperties prefix="tomcat.cope" destfile="build/tomcat.cope.properties" />
-		<foreachEnvironment skipSwitch="copernica.tomcat">
-			<body>
-				<copy tofile="tomcat/conf/Catalina/localhost/copetest-@{env}.xml"
+				<copy tofile="tomcat/conf/Catalina/localhost/copetest-hsqldb.xml"
 						file="copernica/context.xml">
 					<filterset>
-						<filter token="ENV" value="@{env}" />
+						<filter token="ENV" value="hsqldb" />
 						<filter token="PROPERTIES" value="${basedir}/build/tomcat.cope.properties" />
 					</filterset>
 				</copy>
-			</body>
-		</foreachEnvironment>
 	</target>
 
 	<target name="copernica.webtest.compile">
@@ -423,17 +377,13 @@
 	<target name="webtest" depends="copernica.webtest" />
 
 	<target name="index">
-		<foreachEnvironment skipSwitch="index">
-			<body>
 				<mkdir dir="build/environments" />
-				<copy file="environment.html" tofile="build/environments/@{env}.html">
+				<copy file="environment.html" tofile="build/environments/hsqldb.html">
 					<filterset>
 						<filter token="HOST" value="http://localhost:${tomcat.port.http}/" />
-						<filter token="ENV" value="@{env}" />
+						<filter token="ENV" value="hsqldb" />
 					</filterset>
 				</copy>
-			</body>
-		</foreachEnvironment>
 	</target>
 
 	<target name="clean" depends="runtime.clean, instrument.clean, console.clean, copernica.clean">
