@@ -98,7 +98,7 @@ public final class CopernicaServlet extends CopsServlet
 	@Override
 	public void destroy()
 	{
-		connectToken.returnIt();
+		connectToken.returnItConditionally();
 		connectToken = null;
 		provider = null;
 		super.destroy();
