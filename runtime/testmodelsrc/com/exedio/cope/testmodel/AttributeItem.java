@@ -110,22 +110,22 @@ public final class AttributeItem extends Item
 	/**
 	 * An attribute referencing another persistent item
 	 */
-	public static final ItemField<EmptyItem> someItem = newItemField(EmptyItem.class).optional();
+	public static final ItemField<EmptyItem> someItem = ItemField.create(EmptyItem.class).optional();
 
 	/**
 	 * An mandatory attribute referencing another persistent item
 	 */
-	public static final ItemField<EmptyItem> someNotNullItem = newItemField(EmptyItem.class);
+	public static final ItemField<EmptyItem> someNotNullItem = ItemField.create(EmptyItem.class);
 
 	/**
 	 * An enumeration attribute
 	 */
-	public static final EnumField<SomeEnum> someEnum = newEnumField(SomeEnum.class).optional();
+	public static final EnumField<SomeEnum> someEnum = EnumField.create(SomeEnum.class).optional();
 
 	/**
 	 * A mandatory enumeration attribute
 	 */
-	public static final EnumField<SomeEnum> someNotNullEnum = newEnumField(SomeEnum.class);
+	public static final EnumField<SomeEnum> someNotNullEnum = EnumField.create(SomeEnum.class);
 
 	/**
 	 * A data attribute.
