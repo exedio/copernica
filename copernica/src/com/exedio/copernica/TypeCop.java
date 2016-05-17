@@ -64,10 +64,16 @@ final class TypeCop extends CopernicaCop
 		addParameter(TYPE, type.getID());
 		// orderBy must be a feature
 		if(orderBy!=null)
-			addParameter(orderAscending ? ORDER_ASCENDING : ORDER_DESCENDING, ((Feature)orderBy).getName());
+			addParameter(orderAscending ? ORDER_ASCENDING : ORDER_DESCENDING, cast(orderBy).getName());
 		pager.addParameters(this);
 	}
 	
+	@SuppressWarnings("unchecked") // workaround for bug in javac
+	private static Feature cast(final Function<?> o)
+	{
+		return (Feature)o;
+	}
+
 	@Override
 	final CopernicaCop switchLanguage(final CopernicaLanguage newLanguage)
 	{
