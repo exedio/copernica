@@ -18,6 +18,8 @@
 
 package com.exedio.copernica;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+
 import java.io.IOException;
 import java.io.PrintStream;
 
@@ -98,7 +100,7 @@ public final class CopernicaServlet extends CopsServlet
 	@Override
 	public void destroy()
 	{
-		connectToken.returnIt();
+		connectToken.returnItConditionally();
 		connectToken = null;
 		provider = null;
 		super.destroy();
@@ -121,7 +123,7 @@ public final class CopernicaServlet extends CopsServlet
 			final CopernicaCop cop = CopernicaCop.getCop(provider, request);
 			cop.init(request);
 
-			out = new PrintStream(response.getOutputStream(), false, UTF8);
+			out = new PrintStream(response.getOutputStream(), false, UTF_8.name());
 			Copernica_Jspm.write(out, user, cop);
 			out.close();
 
@@ -131,7 +133,7 @@ public final class CopernicaServlet extends CopsServlet
 		{
 			provider.getModel().rollback();
 			if(out==null)
-				out = new PrintStream(response.getOutputStream(), false, UTF8);
+				out = new PrintStream(response.getOutputStream(), false, UTF_8.name());
 
 			BasicAuthorization.reject(response, "Copernica");
 			Copernica_Jspm.writeAuthenticationError(out, e);
@@ -141,7 +143,7 @@ public final class CopernicaServlet extends CopsServlet
 			provider.getModel().rollback();
 			response.setStatus(SC_INTERNAL_SERVER_ERROR);
 			if(out==null)
-				out = new PrintStream(response.getOutputStream(), false, UTF8);
+				out = new PrintStream(response.getOutputStream(), false, UTF_8.name());
 
 			provider.handleException(out, this, request, e);
 		}

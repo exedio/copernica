@@ -19,15 +19,17 @@
 
 package com.exedio.copernica.test;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+
 import java.io.PrintStream;
 
 final class Init_Jspm
 {
-	final static void write(final PrintStream out, final boolean initialized, final boolean transaction) throws InterruptedException
+	final static void write(final PrintStream out, final boolean initialized)
 	{%>
 <html>
 	<head>
-		<meta http-equiv="content-type" content="text/html; charset=<%=InitServlet.UTF8%>">
+		<meta http-equiv="content-type" content="text/html; charset=<%=UTF_8%>">
 		<title>
 			Copernica - Database Administration
 		</title>
@@ -40,21 +42,11 @@ final class Init_Jspm
 		<form action="init.jsp" method="POST">
 			Database:
 			<br>
-			<input type="submit" name="INIT" value="init" />
-			<input type="submit" name="TRANSACTION" value="transaction" /><%
+			<input type="submit" name="INIT" value="init" /><%
 			if(initialized)
 			{
 			%>
 			<div class="message">Example system successfully created!</div><%
-			}
-			if(transaction)
-			{
-			%>
-			<div class="message">Waiting 10 seconds until ending transaction ...</div><%
-			out.flush();
-			Thread.sleep(10000);
-			%>
-			<div class="message">Finished.</div><%
 			}
 			%>
 		</form>

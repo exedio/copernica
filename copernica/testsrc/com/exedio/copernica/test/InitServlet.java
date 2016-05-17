@@ -18,6 +18,8 @@
 
 package com.exedio.copernica.test;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+
 import java.io.IOException;
 import java.io.PrintStream;
 import java.util.Date;
@@ -25,7 +27,6 @@ import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.exedio.cope.Transaction;
 import com.exedio.cope.testmodel.AttributeItem;
 import com.exedio.cope.testmodel.CollisionItem1;
 import com.exedio.cope.testmodel.CollisionItem2;
@@ -45,7 +46,6 @@ import com.exedio.copernica.CopernicaProvider;
 import com.exedio.cops.Cop;
 import com.exedio.cops.CopsServlet;
 import com.exedio.cops.Resource;
-import com.exedio.dsmf.SQLRuntimeException;
 
 public class InitServlet extends CopsServlet
 {
@@ -62,7 +62,6 @@ public class InitServlet extends CopsServlet
 	{
 		final boolean post = Cop.isPost(request);
 		final boolean initialize = post && request.getParameter("INIT")!=null;
-		final boolean transaction = post && request.getParameter("TRANSACTION")!=null;
 		if(initialize)
 		{
 			try
@@ -77,41 +76,8 @@ public class InitServlet extends CopsServlet
 			}
 		}
 
-		final PrintStream out = new PrintStream(response.getOutputStream(), false, UTF8);
-
-		final Transaction tx1;
-		if(transaction)
-		{
-			Main.model.startTransaction("example transaction");
-			tx1 = Main.model.leaveTransaction();
-			Main.model.startTransaction("second example transaction");
-			try
-			{
-				// make transaction connected
-				Main.model.checkSchema();
-			}
-			catch(SQLRuntimeException e)
-			{
-				// ignore
-			}
-		}
-		else
-			tx1 = null;
-
-		try
-		{
-			Init_Jspm.write(out, initialize, transaction);
-		}
-		catch(InterruptedException e)
-		{
-			throw new RuntimeException(e);
-		}
-		if(transaction)
-		{
-			Main.model.commit();
-			Main.model.joinTransaction(tx1);
-			Main.model.commit();
-		}
+		final PrintStream out = new PrintStream(response.getOutputStream(), false, UTF_8.name());
+		Init_Jspm.write(out, initialize);
 		out.close();
 	}
 

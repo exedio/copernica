@@ -19,6 +19,8 @@
 
 package com.exedio.copernica;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+
 import java.io.BufferedReader;
 import java.io.PrintStream;
 import java.io.IOException;
@@ -45,7 +47,7 @@ public final class Copernica_Jspm
 	
 %><html>
 	<head>
-		<meta http-equiv="content-type" content="text/html; charset=<%=CopernicaServlet.UTF8%>">
+		<meta http-equiv="content-type" content="text/html; charset=<%=UTF_8%>">
 		<title><%=cop.getTitle()%></title><%
 		
 		final CopernicaCop home = cop.toHome();

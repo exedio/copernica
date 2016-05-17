@@ -208,7 +208,7 @@
 	<!-- runtime -->
 
 	<target name="runtime.testmodel.instrument" unless="skip.instrument">
-		<instrument verify="${instrument.verify}" finalArgs="true" suppressUnusedWarningOnPrivateActivationConstructor="true" verbose="false">
+		<instrument verify="${instrument.verify}" finalArgs="true" suppressUnusedWarningOnPrivateActivationConstructor="true" annotateGenerated="false" verbose="false">
 			<fileset dir="runtime/testmodelsrc/com/exedio/cope/testmodel">
 				<include name="**/*.java" />
 			</fileset>
@@ -219,7 +219,7 @@
 		<ljavac srcdir="runtime/testmodelsrc" destdir="build/runtime/testmodelclasses">
 			<classpath>
 				<pathelement location="lib/exedio-cope.jar" />
-				<pathelement location="lib/servlet-api.jar" />
+				<pathelement location="lib/javax.servlet-api.jar" />
 			</classpath>
 		</ljavac>
 	</target>
@@ -236,12 +236,12 @@
 			<classpath>
 				<pathelement location="lib/exedio-cope-instrument.jar" />
 				<pathelement location="lib/exedio-cope-instrument-annotations.jar" />
-				<pathelement location="lib/trove.jar" />
-				<pathelement location="lib/servlet-api.jar" />
+				<pathelement location="lib/trove4j.jar" />
+				<pathelement location="lib/javax.servlet-api.jar" />
 				<pathelement location="lib/commons-fileupload.jar" />
 				<pathelement location="lib/bsh-core.jar" />
 				<pathelement location="lib/cojen.jar" />
-				<pathelement location="lib/log4j-bundle.jar" />
+				<pathelement location="lib/slf4j-api.jar" />
 				<pathelement location="lib/junit.jar" />
 				<pathelement location="build/runtime/classes" />
 				<pathelement location="build/instrument/classes" />
@@ -273,7 +273,7 @@
 				<pathelement location="lib/exedio-cope.jar" />
 				<pathelement location="lib/exedio-cops.jar" />
 				<pathelement location="lib/commons-fileupload.jar" />
-				<pathelement location="lib/servlet-api.jar" />
+				<pathelement location="lib/javax.servlet-api.jar" />
 				<pathelement location="lib/exedio-cope-instrument-annotations.jar" />
 				<pathelement location="lib/findbugs-annotations.jar" />
 			</classpath>
@@ -310,7 +310,7 @@
 				<pathelement location="lib/exedio-cope.jar" />
 				<pathelement location="lib/exedio-cops.jar" />
 				<pathelement location="lib/junit.jar" />
-				<pathelement location="lib/servlet-api.jar" />
+				<pathelement location="lib/javax.servlet-api.jar" />
 				<pathelement location="lib/exedio-cope-instrument-annotations.jar" />
 				<pathelement location="lib/findbugs-annotations.jar" />
 			</classpath>
@@ -332,7 +332,7 @@
 				</copy>
 
 				<copy todir="build/copernica/web-@{env}/WEB-INF/lib">
-					<fileset file="lib/trove.jar" />
+					<fileset file="lib/trove4j.jar" />
 					<fileset file="lib/commons-fileupload.jar" />
 					<fileset file="lib/commons-io.jar" />
 					<fileset file="lib/exedio-cops.jar" />
@@ -341,7 +341,7 @@
 					<fileset file="lib/exedio-cope-util.jar" />
 					<fileset file="lib/exedio-cope-servletutil.jar" />
 					<fileset file="lib/@{env.driver}" />
-					<fileset file="lib/log4j-bundle.jar" />
+					<fileset file="lib/slf4j-api.jar" />
 				</copy>
 
 				<copy tofile="build/copernica/web-@{env}/WEB-INF/cope.properties" file="@{env.file}" />
@@ -488,13 +488,13 @@
 			<fileset file="copernica/src/com" includes="**/*.java" />
 			<arg value="${api.doclint}" />
 			<classpath>
-				<pathelement location="lib/trove.jar" />
+				<pathelement location="lib/trove4j.jar" />
 				<pathelement location="lib/junit.jar" />
 				<pathelement location="lib/bsh-core.jar" />
 				<pathelement location="lib/cojen.jar" />
 				<pathelement location="lib/exedio-cops.jar" />
 				<pathelement location="lib/exedio-cope.jar" />
-				<pathelement location="lib/servlet-api.jar" />
+				<pathelement location="lib/javax.servlet-api.jar" />
 				<pathelement location="lib/commons-fileupload.jar" />
 			</classpath>
 			<group title="Cope Runtime Library" packages="com.exedio.cope:com.exedio.cope.*" />
