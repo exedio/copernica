@@ -275,6 +275,7 @@
 				<pathelement location="lib/commons-fileupload.jar" />
 				<pathelement location="lib/servlet-api.jar" />
 				<pathelement location="lib/exedio-cope-instrument-annotations.jar" />
+				<pathelement location="lib/findbugs-annotations.jar" />
 			</classpath>
 		</ljavac>
 		<copy todir="build/copernica/classes">
@@ -311,6 +312,7 @@
 				<pathelement location="lib/junit.jar" />
 				<pathelement location="lib/servlet-api.jar" />
 				<pathelement location="lib/exedio-cope-instrument-annotations.jar" />
+				<pathelement location="lib/findbugs-annotations.jar" />
 			</classpath>
 		</ljavac>
 		<copy todir="build/copernica/testclasses/com/exedio/copernica">
