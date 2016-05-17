@@ -6,7 +6,6 @@
 		<delete dir="../lib">
 			<include name="*" />
 			<!-- TODO -->
-			<exclude name="apache-tomcat.tar.gz" />
 			<exclude name="ant-contrib.jar" />
 		</delete>
 		<copy overwrite="true" todir="../lib">

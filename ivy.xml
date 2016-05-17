@@ -20,6 +20,7 @@
 	</publications>
 	<dependencies>
 		<dependency org="javax.servlet" name="servlet-api" rev="2.4" />
+		<dependency org="org.apache" name="apache-tomcat" rev="6.0.16" />
 		<dependency org="commons-fileupload" name="commons-fileupload" rev="1.2.1"/>
 		<dependency org="junit" name="junit" rev="4.4" conf="build->default" />
 		<dependency org="com.exedio" name="cope" rev="6434">
