@@ -5,6 +5,12 @@
 	<property file="local.properties" />
 	<property file="project.properties" />
 
+	<import>
+		<fileset dir="macros">
+			<include name="*.xml" />
+		</fileset>
+	</import>
+
 	<taskdef name="LoadFile" classname="org.apache.tools.ant.taskdefs.LoadFile" />
 
 	<taskdef
@@ -202,7 +208,7 @@
 	<!-- runtime -->
 
 	<target name="runtime.testmodel.instrument" unless="skip.instrument">
-		<instrument finalArgs="true" createDeprecated="true" suppressUnusedWarningOnPrivateActivationConstructor="true" verbose="false">
+		<instrument finalArgs="true" suppressUnusedWarningOnPrivateActivationConstructor="true" verbose="false">
 			<fileset dir="runtime/testmodelsrc/com/exedio/cope/testmodel">
 				<include name="**/*.java" />
 			</fileset>
@@ -229,11 +235,13 @@
 		<taskdef name="instrument" classname="com.exedio.cope.instrument.AntTask">
 			<classpath>
 				<pathelement location="lib/exedio-cope-instrument.jar" />
+				<pathelement location="lib/exedio-cope-instrument-annotations.jar" />
 				<pathelement location="lib/trove.jar" />
 				<pathelement location="lib/servlet-api.jar" />
 				<pathelement location="lib/commons-fileupload.jar" />
 				<pathelement location="lib/bsh-core.jar" />
 				<pathelement location="lib/cojen.jar" />
+				<pathelement location="lib/log4j-bundle.jar" />
 				<pathelement location="lib/junit.jar" />
 				<pathelement location="build/runtime/classes" />
 				<pathelement location="build/instrument/classes" />
@@ -266,6 +274,7 @@
 				<pathelement location="lib/exedio-cops.jar" />
 				<pathelement location="lib/commons-fileupload.jar" />
 				<pathelement location="lib/servlet-api.jar" />
+				<pathelement location="lib/exedio-cope-instrument-annotations.jar" />
 			</classpath>
 		</ljavac>
 		<copy todir="build/copernica/classes">
@@ -296,10 +305,12 @@
 				<pathelement location="build/runtime/classes" />
 				<pathelement location="build/runtime/testmodelclasses" />
 				<pathelement location="build/copernica/classes" />
+				<pathelement location="lib/exedio-cope-servletutil.jar" />
 				<pathelement location="lib/exedio-cope.jar" />
 				<pathelement location="lib/exedio-cops.jar" />
 				<pathelement location="lib/junit.jar" />
 				<pathelement location="lib/servlet-api.jar" />
+				<pathelement location="lib/exedio-cope-instrument-annotations.jar" />
 			</classpath>
 		</ljavac>
 		<copy todir="build/copernica/testclasses/com/exedio/copernica">
@@ -326,7 +337,9 @@
 					<fileset file="lib/exedio-cope.jar" />
 					<fileset file="lib/exedio-cope-console.jar" />
 					<fileset file="lib/exedio-cope-util.jar" />
+					<fileset file="lib/exedio-cope-servletutil.jar" />
 					<fileset file="lib/@{env.driver}" />
+					<fileset file="lib/log4j-bundle.jar" />
 				</copy>
 
 				<copy tofile="build/copernica/web-@{env}/WEB-INF/cope.properties" file="@{env.file}" />
@@ -338,12 +351,14 @@
 	</target>
 
 	<target name="copernica.tomcat" depends="copernica.web, catalina">
+		<echoSubProperties prefix="tomcat.cope" destfile="build/tomcat.cope.properties" />
 		<foreachEnvironment skipSwitch="copernica.tomcat">
 			<body>
 				<copy tofile="tomcat/conf/Catalina/localhost/copetest-@{env}.xml"
 						file="copernica/context.xml">
 					<filterset>
 						<filter token="ENV" value="@{env}" />
+						<filter token="PROPERTIES" value="${basedir}/build/tomcat.cope.properties" />
 					</filterset>
 				</copy>
 			</body>

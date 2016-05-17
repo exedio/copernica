@@ -23,10 +23,11 @@
 		<dependency org="org.apache" name="apache-tomcat" rev="6.0.16" />
 		<dependency org="commons-fileupload" name="commons-fileupload" rev="1.2.1"/>
 		<dependency org="junit" name="junit" rev="4.4" conf="build->default" />
-		<dependency org="com.exedio" name="cope" rev="6434">
+		<dependency org="com.exedio" name="cope" rev="7358">
 			<conf name="runtime" mapped="runtime" />
 			<conf name="build" mapped="hsqldb" />
 		</dependency>
+		<dependency org="com.exedio" name="copeservletutil" rev="31" />
 		<dependency org="com.exedio" name="cops" rev="200" />
 		<dependency org="com.exedio" name="jspm" rev="89" conf="build->runtime" />
 		<dependency org="com.exedio" name="copeconsole" rev="6294" conf="build->runtime" />
