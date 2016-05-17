@@ -327,7 +327,7 @@
 					<fileset file="lib/exedio-cope.jar" />
 					<fileset file="lib/exedio-cope-console.jar" />
 					<fileset file="lib/exedio-cope-util.jar" />
-					<fileset file="lib/jdbc/@{env.driver}" />
+					<fileset file="lib/@{env.driver}" />
 				</copy>
 
 				<copy tofile="build/copernica/web-@{env}/WEB-INF/cope.properties" file="@{env.file}" />
