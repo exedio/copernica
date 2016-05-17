@@ -35,7 +35,6 @@ import com.exedio.cope.Model;
 import com.exedio.cope.Type;
 import com.exedio.cope.UniqueConstraint;
 import com.exedio.cope.misc.ConnectToken;
-import com.exedio.cope.misc.ServletUtil;
 
 public abstract class TransientCopernicaProvider implements CopernicaProvider
 {
