@@ -42,6 +42,7 @@ import javax.servlet.ServletContextListener;
  */
 public final class WebappListener implements ServletContextListener
 {
+	@Override
 	public void contextInitialized(final ServletContextEvent sce)
 	{
 		final ServletContext ctx = sce.getServletContext();
@@ -58,11 +59,13 @@ public final class WebappListener implements ServletContextListener
 	{
 		return new Source()
 		{
+			@Override
 			public String get(String currentKey)
 			{
 				return key.equals(currentKey) ? null : s.get(currentKey);
 			}
 
+			@Override
 			public Collection<String> keySet()
 			{
 				final ArrayList<String> result = new ArrayList<String>(s.keySet());
@@ -70,6 +73,7 @@ public final class WebappListener implements ServletContextListener
 				return result;
 			}
 
+			@Override
 			public String getDescription()
 			{
 				return s.getDescription() + " without " + key;
@@ -77,6 +81,7 @@ public final class WebappListener implements ServletContextListener
 		};
 	}
 
+	@Override
 	public void contextDestroyed(final ServletContextEvent sce)
 	{
 		removeProperties(Main.model);

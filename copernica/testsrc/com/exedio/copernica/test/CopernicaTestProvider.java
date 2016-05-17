@@ -88,11 +88,13 @@ public class CopernicaTestProvider extends TransientCopernicaProvider
 		);
 	}
 
+	@Override
 	public Model getModel()
 	{
 		return model;
 	}
 
+	@Override
 	public boolean requiresAuthorization()
 	{
 		return true;

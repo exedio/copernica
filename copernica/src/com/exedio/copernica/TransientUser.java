@@ -31,11 +31,13 @@ public class TransientUser implements CopernicaUser
 		this.name = name;
 	}
 
+	@Override
 	public String getCopernicaName()
 	{
 		return name;
 	}
 
+	@Override
 	public boolean checkCopernicaPassword(final String actualPassword)
 	{
 		return this.password.equals(actualPassword);

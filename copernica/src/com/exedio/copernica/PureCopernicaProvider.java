@@ -37,11 +37,13 @@ final class PureCopernicaProvider extends TransientCopernicaProvider
 		);
 	}
 
+	@Override
 	public Model getModel()
 	{
 		return model;
 	}
 
+	@Override
 	public boolean requiresAuthorization()
 	{
 		return false;

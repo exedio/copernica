@@ -30,6 +30,7 @@ public class TransientComponent implements Component
 		this.id = id;
 	}
 
+	@Override
 	public String getCopernicaID()
 	{
 		return id;
@@ -40,6 +41,7 @@ public class TransientComponent implements Component
 		names.put(language, name);
 	}
 
+	@Override
 	public String getCopernicaName(final CopernicaLanguage displayLanguage)
 	{
 		{
@@ -55,6 +57,7 @@ public class TransientComponent implements Component
 		return id;
 	}
 
+	@Override
 	public String getCopernicaIconURL()
 	{
 		return null;

@@ -39,6 +39,7 @@ import com.exedio.cope.misc.ServletUtil;
 
 public abstract class TransientCopernicaProvider implements CopernicaProvider
 {
+	@Override
 	public ConnectToken connect(final ServletConfig config, final String name)
 	{
 		final Model model = getModel();
@@ -61,6 +62,7 @@ public abstract class TransientCopernicaProvider implements CopernicaProvider
 		transientLanguages = result;
 	}
 
+	@Override
 	public Collection<? extends CopernicaLanguage> getDisplayLanguages()
 	{
 		return
@@ -69,6 +71,7 @@ public abstract class TransientCopernicaProvider implements CopernicaProvider
 				: transientLanguages.values();
 	}
 
+	@Override
 	public CopernicaLanguage findLanguageByID(final String copernicaID)
 	{
 		return
@@ -91,6 +94,7 @@ public abstract class TransientCopernicaProvider implements CopernicaProvider
 		transientUsers = result;
 	}
 
+	@Override
 	public CopernicaUser findUserByID(String copernicaID)
 	{
 		return
@@ -99,6 +103,7 @@ public abstract class TransientCopernicaProvider implements CopernicaProvider
 				: transientUsers.get(copernicaID);
 	}
 
+	@Override
 	public Collection<CopernicaCategory> getRootCategories()
 	{
 		return Collections.<CopernicaCategory>emptyList();
@@ -121,11 +126,13 @@ public abstract class TransientCopernicaProvider implements CopernicaProvider
 		transientSections.put(type, sections);
 	}
 
+	@Override
 	public Collection<? extends Field<?>> getMainAttributes(final Type<?> type)
 	{
 		return transientMainAttributes==null ? null : transientMainAttributes.get(type);
 	}
 
+	@Override
 	public Collection<? extends CopernicaSection> getSections(final Type<?> type)
 	{
 		return transientSections==null ? null : transientSections.get(type);
@@ -156,6 +163,7 @@ public abstract class TransientCopernicaProvider implements CopernicaProvider
 		return result.toString();
 	}
 
+	@Override
 	public String getDisplayNameNull(CopernicaLanguage displayLanguage)
 	{
 		return
@@ -164,6 +172,7 @@ public abstract class TransientCopernicaProvider implements CopernicaProvider
 			: "-";
 	}
 
+	@Override
 	public String getDisplayNameOn(CopernicaLanguage displayLanguage)
 	{
 		return
@@ -172,6 +181,7 @@ public abstract class TransientCopernicaProvider implements CopernicaProvider
 			: "X";
 	}
 
+	@Override
 	public String getDisplayNameOff(CopernicaLanguage displayLanguage)
 	{
 		return
@@ -180,17 +190,20 @@ public abstract class TransientCopernicaProvider implements CopernicaProvider
 			: "/";
 	}
 
+	@Override
 	public String getDisplayName(final CopernicaLanguage displayLanguage, final Type<?> type)
 	{
 		return breakupName(type.getID());
 	}
 
+	@Override
 	public String getDisplayName(final CopernicaLanguage displayLanguage, final Feature feature)
 	{
 		String name = feature.getName();
 		return breakupName(name);
 	}
 
+	@Override
 	public String getDisplayName(final RequestCache cache, final CopernicaLanguage displayLanguage, final Item item)
 	{
 		final Type<?> type = item.getCopeType();
@@ -230,6 +243,7 @@ public abstract class TransientCopernicaProvider implements CopernicaProvider
 		transientLanguage.enumerationValueNames.put(value, name);
 	}
 
+	@Override
 	public String getDisplayName(final CopernicaLanguage displayLanguage, final Enum<?> value)
 	{
 		if(displayLanguage instanceof TransientLanguage)
@@ -243,21 +257,25 @@ public abstract class TransientCopernicaProvider implements CopernicaProvider
 		return value.name();
 	}
 
+	@Override
 	public String getIconURL(final Type<?> type)
 	{
 		return null;
 	}
 
+	@Override
 	public CopernicaCategory findCategoryByID(final String copernicaID)
 	{
 		return null;
 	}
 
+	@Override
 	public CopernicaSection findSectionByID(final String copernicaID)
 	{
 		return null;
 	}
 
+	@Override
 	public void handleException(
 			final PrintStream out, final CopernicaServlet servlet,
 			final HttpServletRequest request, final Exception e)
@@ -267,6 +285,7 @@ public abstract class TransientCopernicaProvider implements CopernicaProvider
 	}
 
 
+	@Override
 	public int getLimitCeiling(final Type<?> type)
 	{
 		return 500;

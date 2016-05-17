@@ -37,6 +37,7 @@ public class TransientSection
 		this.attributes = Collections.unmodifiableList(Arrays.asList(attributes));
 	}
 
+	@Override
 	public Collection<? extends Field<?>> getCopernicaAttributes()
 	{
 		return attributes;
