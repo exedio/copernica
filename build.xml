@@ -67,7 +67,6 @@
 
 	<macrodef name="ljunit">
 		<attribute name="test" />
-		<attribute name="env" default="N" />
 		<element name="classpath" optional="true" implicit="true" />
 		<sequential>
 			<mkdir dir="build/testresults" />
@@ -77,7 +76,7 @@
 				<formatter type="brief" usefile="false" />
 				<formatter type="xml" />
 				<classpath />
-				<test name="@{test}" todir="build/testresults" outfile="@{test}-@{env}" />
+				<test name="@{test}" todir="build/testresults" outfile="@{test}" />
 				<sysproperty key="tomcat.port.http" value="${tomcat.port.http}" />
 				<assertions><enable/></assertions>
 			</junit>
@@ -309,7 +308,6 @@
 		<copy tofile="tomcat/conf/Catalina/localhost/copetest-hsqldb.xml"
 				file="copernica/context.xml">
 			<filterset>
-				<filter token="ENV" value="hsqldb" />
 				<filter token="PROPERTIES" value="${basedir}/build/tomcat.cope.properties" />
 			</filterset>
 		</copy>
@@ -381,7 +379,6 @@
 		<copy file="environment.html" tofile="build/environments/hsqldb.html">
 			<filterset>
 				<filter token="HOST" value="http://localhost:${tomcat.port.http}/" />
-				<filter token="ENV" value="hsqldb" />
 			</filterset>
 		</copy>
 	</target>

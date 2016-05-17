@@ -1,11 +1,11 @@
 
 <Context
-		path="/copetest-@ENV@"
-		docBase="../../build/copernica/web-@ENV@"
+		path="/copetest-hsqldb"
+		docBase="../../build/copernica/web-hsqldb"
 		debug="0"
 		privileged="true">
 	<Parameter
-			name="copetest-@ENV@.com.exedio.cope.servletutil.ServletSource.propertiesFile"
+			name="copetest-hsqldb.com.exedio.cope.servletutil.ServletSource.propertiesFile"
 			value="@PROPERTIES@"
 	/>
 </Context>
