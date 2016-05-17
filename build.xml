@@ -189,21 +189,21 @@
 
 	<!-- instrument -->
 
-		<taskdef name="instrument" classname="com.exedio.cope.instrument.AntTask">
-			<classpath>
-				<pathelement location="lib/exedio-cope-instrument.jar" />
-				<pathelement location="lib/exedio-cope-instrument-annotations.jar" />
-				<pathelement location="lib/trove4j.jar" />
-				<pathelement location="lib/javax.servlet-api.jar" />
-				<pathelement location="lib/commons-fileupload.jar" />
-				<pathelement location="lib/bsh-core.jar" />
-				<pathelement location="lib/cojen.jar" />
-				<pathelement location="lib/slf4j-api.jar" />
-				<pathelement location="lib/junit.jar" />
-				<pathelement location="build/runtime/classes" />
-				<pathelement location="build/instrument/classes" />
-			</classpath>
-		</taskdef>
+	<taskdef name="instrument" classname="com.exedio.cope.instrument.AntTask">
+		<classpath>
+			<pathelement location="lib/exedio-cope-instrument.jar" />
+			<pathelement location="lib/exedio-cope-instrument-annotations.jar" />
+			<pathelement location="lib/trove4j.jar" />
+			<pathelement location="lib/javax.servlet-api.jar" />
+			<pathelement location="lib/commons-fileupload.jar" />
+			<pathelement location="lib/bsh-core.jar" />
+			<pathelement location="lib/cojen.jar" />
+			<pathelement location="lib/slf4j-api.jar" />
+			<pathelement location="lib/junit.jar" />
+			<pathelement location="build/runtime/classes" />
+			<pathelement location="build/instrument/classes" />
+		</classpath>
+	</taskdef>
 
 	<target name="instrument.clean">
 		<delete dir="build/instrument" />
@@ -278,41 +278,41 @@
 	</target>
 
 	<target name="copernica.web" depends="copernica.compile, copernica.test.compile">
-				<mkdir dir="build/copernica/web-hsqldb" />
+		<mkdir dir="build/copernica/web-hsqldb" />
 
-				<copy todir="build/copernica/web-hsqldb/WEB-INF/classes">
-					<fileset dir="build/runtime/testmodelclasses" />
-					<fileset dir="build/copernica/classes" />
-					<fileset dir="build/copernica/testclasses" />
-				</copy>
+		<copy todir="build/copernica/web-hsqldb/WEB-INF/classes">
+			<fileset dir="build/runtime/testmodelclasses" />
+			<fileset dir="build/copernica/classes" />
+			<fileset dir="build/copernica/testclasses" />
+		</copy>
 
-				<copy todir="build/copernica/web-hsqldb/WEB-INF/lib">
-					<fileset file="lib/trove4j.jar" />
-					<fileset file="lib/commons-fileupload.jar" />
-					<fileset file="lib/commons-io.jar" />
-					<fileset file="lib/exedio-cops.jar" />
-					<fileset file="lib/exedio-cope.jar" />
-					<fileset file="lib/exedio-cope-console.jar" />
-					<fileset file="lib/exedio-cope-util.jar" />
-					<fileset file="lib/exedio-cope-servletutil.jar" />
-					<fileset file="lib/hsqldb.jar" />
-					<fileset file="lib/slf4j-api.jar" />
-				</copy>
+		<copy todir="build/copernica/web-hsqldb/WEB-INF/lib">
+			<fileset file="lib/trove4j.jar" />
+			<fileset file="lib/commons-fileupload.jar" />
+			<fileset file="lib/commons-io.jar" />
+			<fileset file="lib/exedio-cops.jar" />
+			<fileset file="lib/exedio-cope.jar" />
+			<fileset file="lib/exedio-cope-console.jar" />
+			<fileset file="lib/exedio-cope-util.jar" />
+			<fileset file="lib/exedio-cope-servletutil.jar" />
+			<fileset file="lib/hsqldb.jar" />
+			<fileset file="lib/slf4j-api.jar" />
+		</copy>
 
-				<copy todir="build/copernica/web-hsqldb/WEB-INF/"
-						file="copernica/web.xml" />
-				<touch file="build/copernica/web-hsqldb/WEB-INF/web.xml" />
+		<copy todir="build/copernica/web-hsqldb/WEB-INF/"
+				file="copernica/web.xml" />
+		<touch file="build/copernica/web-hsqldb/WEB-INF/web.xml" />
 	</target>
 
 	<target name="copernica.tomcat" depends="copernica.web, catalina">
 		<echoSubProperties prefix="tomcat.cope" destfile="build/tomcat.cope.properties" />
-				<copy tofile="tomcat/conf/Catalina/localhost/copetest-hsqldb.xml"
-						file="copernica/context.xml">
-					<filterset>
-						<filter token="ENV" value="hsqldb" />
-						<filter token="PROPERTIES" value="${basedir}/build/tomcat.cope.properties" />
-					</filterset>
-				</copy>
+		<copy tofile="tomcat/conf/Catalina/localhost/copetest-hsqldb.xml"
+				file="copernica/context.xml">
+			<filterset>
+				<filter token="ENV" value="hsqldb" />
+				<filter token="PROPERTIES" value="${basedir}/build/tomcat.cope.properties" />
+			</filterset>
+		</copy>
 	</target>
 
 	<target name="copernica.webtest.compile">
@@ -377,13 +377,13 @@
 	<target name="webtest" depends="copernica.webtest" />
 
 	<target name="index">
-				<mkdir dir="build/environments" />
-				<copy file="environment.html" tofile="build/environments/hsqldb.html">
-					<filterset>
-						<filter token="HOST" value="http://localhost:${tomcat.port.http}/" />
-						<filter token="ENV" value="hsqldb" />
-					</filterset>
-				</copy>
+		<mkdir dir="build/environments" />
+		<copy file="environment.html" tofile="build/environments/hsqldb.html">
+			<filterset>
+				<filter token="HOST" value="http://localhost:${tomcat.port.http}/" />
+				<filter token="ENV" value="hsqldb" />
+			</filterset>
+		</copy>
 	</target>
 
 	<target name="clean" depends="runtime.clean, instrument.clean, console.clean, copernica.clean">
