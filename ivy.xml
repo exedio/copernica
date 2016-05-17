@@ -12,23 +12,21 @@
 	</info>
 	<configurations>
 		<conf name="runtime" />
+		<conf name="changelog" />
 		<conf name="build" extends="runtime" visibility="private" />
 	</configurations>
 	<publications>
-		<artifact name="exedio-copernica" />
-		<artifact name="exedio-copernica" type="log" ext="txt" />
+		<artifact name="exedio-copernica" conf="runtime"   type="jar" ext="jar" />
+		<artifact name="exedio-copernica" conf="changelog" type="log" ext="txt" />
 	</publications>
 	<dependencies>
-		<dependency org="javax.servlet" name="servlet-api" rev="2.4" />
-		<dependency org="org.apache" name="apache-tomcat" rev="6.0.16" />
-		<dependency org="commons-fileupload" name="commons-fileupload" rev="1.2.1"/>
+		<dependency org="javax.servlet" name="javax.servlet-api" rev="3.0.1" conf="*->default" />
+		<dependency org="org.apache" name="apache-tomcat" rev="6.0.16" conf="build->default" />
+		<dependency org="commons-fileupload" name="commons-fileupload" rev="1.2.1" conf="runtime->master,optional; build->sources" />
 		<dependency org="junit" name="junit" rev="4.4" conf="build->default" />
-		<dependency org="com.exedio" name="cope" rev="8800">
-			<conf name="runtime" mapped="runtime" />
-			<conf name="build" mapped="hsqldb,sources,changelog" />
-		</dependency>
-		<dependency org="com.exedio" name="copeservletutil" rev="73" />
-		<dependency org="com.exedio" name="cops" rev="393" />
+		<dependency org="com.exedio" name="cope" rev="8800" conf="runtime->runtime; build->hsqldb,sources,changelog" />
+		<dependency org="com.exedio" name="copeservletutil" rev="73" conf="runtime->runtime; build->runtime,sources,changelog" />
+		<dependency org="com.exedio" name="cops" rev="393" conf="runtime->runtime; build->runtime,sources,changelog" />
 		<dependency org="com.exedio" name="jspm" rev="89" conf="build->runtime" />
 		<dependency org="com.exedio" name="copeconsole" rev="6294" conf="build->runtime" />
 
