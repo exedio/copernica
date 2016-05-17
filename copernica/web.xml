@@ -70,7 +70,7 @@
 		<servlet-name>copernica.pure</servlet-name>
 		<url-pattern>/copernica-pure.jsp/*</url-pattern>
 	</servlet-mapping>
-	
+
 	<servlet>
 		<servlet-name>init</servlet-name>
 		<servlet-class>com.exedio.copernica.test.InitServlet</servlet-class>
@@ -84,9 +84,9 @@
 		Copernica Test Application
 	</description>
 	<display-name>Copernica Test Application</display-name>
-	
+
 	<session-config>
 		<session-timeout>1<!--minute--></session-timeout>
 	</session-config>
-	
+
 </web-app>
