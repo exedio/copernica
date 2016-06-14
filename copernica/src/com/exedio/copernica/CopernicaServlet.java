@@ -82,6 +82,7 @@ public final class CopernicaServlet extends CopsServlet
 
 	static final Resource stylesheet = new Resource("copernica.css");
 	static final Resource logo = new Resource("exedio.png");
+	static final Resource shortcutIcon = new Resource("shortcutIcon.png");
 
 	@Override
 	public void init() throws ServletException
