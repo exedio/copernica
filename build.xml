@@ -400,15 +400,9 @@
 		<delete dir="build/api" />
 		<mkdir  dir="build/api" />
 
-		<condition property="api.doclint" value="-Xdoclint:all,-missing" else="-nosince"> <!-- nosince is just a dummy -->
-			<available classname="java.util.Optional" /> <!-- available since JDK 1.8 -->
-		</condition>
-		<echo message="doclint //${api.doclint}//" />
-
 		<javadoc
 				destdir="build/api"
 				maxmemory="60m"
-				source="1.5"
 				private="${api.private}"
 				author="on"
 				use="on"
@@ -427,7 +421,7 @@
 			<link href="${api.link.ant}"   packagelistLoc="package-list/ant"   offline="true" />
 			<link href="${api.link.cops}"  packagelistLoc="package-list/cops"  offline="true" />
 			<fileset file="copernica/src/com" includes="**/*.java" />
-			<arg value="${api.doclint}" />
+			<arg value="-Xdoclint:all,-missing" />
 			<classpath>
 				<pathelement location="lib/trove4j.jar" />
 				<pathelement location="lib/junit.jar" />
