@@ -24,7 +24,7 @@
 		<dependency org="org.apache" name="apache-tomcat" rev="6.0.16" conf="build->default" />
 		<dependency org="commons-fileupload" name="commons-fileupload" rev="1.2.1" conf="runtime->master,optional; build->sources" />
 		<dependency org="junit" name="junit" rev="4.4" conf="build->default" />
-		<dependency org="com.exedio" name="cope" rev="8800" conf="runtime->runtime; build->hsqldb,sources,changelog" />
+		<dependency org="com.exedio" name="cope" rev="8919" conf="runtime->runtime; build->hsqldb,sources,changelog" />
 		<dependency org="com.exedio" name="copeservletutil" rev="73" conf="runtime->runtime; build->runtime,sources,changelog" />
 		<dependency org="com.exedio" name="cops" rev="393" conf="runtime->runtime; build->runtime,sources,changelog" />
 		<dependency org="com.exedio" name="jspm" rev="89" conf="build->runtime" />
